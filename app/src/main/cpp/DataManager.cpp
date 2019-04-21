@@ -40,7 +40,12 @@ void DataManager::clearData()
         videoPackets.pop_front();
         av_packet_unref(avPacket);
     }
-    avcodec_flush_buffers(videoCodecContext);
+    LOGE("clearData video start 2");
+    if(videoCodecContext != 0){
+        avcodec_flush_buffers(videoCodecContext);
+    }
+
+    LOGE("clearData video start 3");
     videoLock.unlock();
 
     LOGE("clearData audio start");
@@ -62,7 +67,10 @@ void DataManager::clearData()
         if(data!=0)
         free(data);
     }
-    avcodec_flush_buffers(audioCodecContext);
+    if(audioCodecContext != 0){
+        avcodec_flush_buffers(audioCodecContext);
+    }
+
     while(audioPts.size() >0)
     {
         audioPts.pop_front();

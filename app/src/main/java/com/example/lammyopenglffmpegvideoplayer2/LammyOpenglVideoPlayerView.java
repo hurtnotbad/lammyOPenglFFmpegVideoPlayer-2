@@ -52,11 +52,12 @@ public class LammyOpenglVideoPlayerView extends GLSurfaceView implements Surface
     @Override
     public void surfaceDestroyed(SurfaceHolder var1)
     {
-
+        onSurfaceDestroyed(nativeLammyVideoPlayer);
     }
 
 
 
+    private native void  onSurfaceDestroyed(long nativeLammyVideoPlayer);
 
     private void init(){
         nativeLammyVideoPlayer =  initNativeVideoPlayer();

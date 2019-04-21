@@ -174,4 +174,14 @@ Java_com_example_lammyopenglffmpegvideoplayer2_LammyOpenglVideoPlayerView_InitVi
     ANativeWindow *win = ANativeWindow_fromSurface(env,surface);
     lammyplayer->dataManager->win = win;
     lammyplayer->startVideo();
+}extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_lammyopenglffmpegvideoplayer2_LammyOpenglVideoPlayerView_onSurfaceDestroyed(JNIEnv *env,
+                                                                                             jobject instance,
+                                                                                             jlong nativeLammyVideoPlayer)
+{
+
+    LammyOpenglVideoPlayer * lammyplayer =(LammyOpenglVideoPlayer *) nativeLammyVideoPlayer;
+    lammyplayer->stopVideo();
+
 }

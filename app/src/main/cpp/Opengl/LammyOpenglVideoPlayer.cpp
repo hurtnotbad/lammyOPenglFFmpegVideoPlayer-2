@@ -64,10 +64,26 @@ void LammyOpenglVideoPlayer::startVideo()
 {
     dataManager->isVideoExit = false;
     dataManager->isVideoRunning  = true;
+    LOGE("startVideo.....................!");
     std::thread video_th(&LammyOpenglVideoPlayer::videoThreadMain,this);
     video_th.detach();
 }
+bool LammyOpenglVideoPlayer::stopVideo()
+{
+    dataManager->isVideoExit = true;
+    for(int i = 0 ; i < 200; i++)
+    {
+        if( !dataManager->isVideoRunning){// !dataManager->isVideoRunning&&
+            LOGE("stop thread success !");
+            return true;
+        }
+        LSleep(1);
+    }
+    LEGL::Get()->Close();
+    LOGE("stop time out !");
+    return false;
 
+}
 
 void LammyOpenglVideoPlayer::audioThreadMain()
 {
@@ -76,7 +92,11 @@ void LammyOpenglVideoPlayer::audioThreadMain()
         while(dataManager->audioPauseReady)
         {
             LSleep(2);
-            //continue;
+            if(dataManager->isExit)
+            {
+                dataManager->isAudioRunning= false;
+                return;
+            }
         }
         /********************* 解码重采样部分****************************/
         AVFrame * avFrame = ffMdecode->decode(1);
@@ -102,14 +122,18 @@ void LammyOpenglVideoPlayer::audioThreadMain()
 }
 
 void LammyOpenglVideoPlayer::demuxThreadMain()
-{
+{ LOGI("demuxThreadMain  .start....");
     while(!dataManager->isExit)
     {
 
         while(dataManager->demuxPauseReady)
         {
             LSleep(2);
-            continue;
+            if(dataManager->isExit)
+            {
+                dataManager->isDemuxRunning= false;
+                return;
+            }
         }
         /********************* 解封装部分****************************/
         int mode = ffmDemux->demux();
@@ -137,7 +161,6 @@ void LammyOpenglVideoPlayer::play(const char * videoPath)
 
     LOGI("LammyVideoPlayer play .....0");
     dataManager->url = videoPath;
-    dataManager->isVideoRunning  = true;
     dataManager->isAudioRunning  = true;
     dataManager->isDemuxRunning= true;
     dataManager->isPause =false;
@@ -167,9 +190,13 @@ void LammyOpenglVideoPlayer::close()
 {
     if(dataManager->avFormatContext == nullptr)
         return;
+    if(!dataManager->isPause){
+        pauseOrContinue();
+    }
+    dataManager->clearData();
+    pauseOrContinue();
     stopThread();
     openSLESAudioPlayer->Close();
-    dataManager->clearData();
     dataManager->closeFFMpeg();
 
 }

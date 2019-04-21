@@ -35,6 +35,7 @@ public:
     void seekTo(float progress);
 
     void startVideo();
+    bool stopVideo();
     void demuxThreadMain();
     void videoThreadMain();
     void seekThreadMain();

@@ -12,7 +12,6 @@
 void LEGL::Draw()
 {
     mux.lock();
-    LOGE("draw................................................................");
     if(display == EGL_NO_DISPLAY || surface == EGL_NO_SURFACE)
     {
         LOGE("draw..EGL_NO_DISPLAY.....................................................1111111111111111.");
@@ -26,7 +25,7 @@ void LEGL::Draw()
    {
        LOGE("draw failed ......");
    }
-
+    LOGE("draw success ......");
     mux.unlock();
 }
  void LEGL::Close()
