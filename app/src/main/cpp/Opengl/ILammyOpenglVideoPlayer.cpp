@@ -33,8 +33,8 @@ Java_com_example_lammyopenglffmpegvideoplayer2_LammyOpenglVideoPlayerView_play(J
 {
     const char *videoPath = env->GetStringUTFChars(videoPath_, 0);
     LammyOpenglVideoPlayer * lammyplayer =(LammyOpenglVideoPlayer *) nativeVideoPlayer;
-    ANativeWindow *win = ANativeWindow_fromSurface(env,surface);
-    lammyplayer->dataManager->win = win;
+//    ANativeWindow *win = ANativeWindow_fromSurface(env,surface);
+//    lammyplayer->dataManager->win = win;
     lammyplayer->play(videoPath);
 
 }
@@ -162,15 +162,16 @@ Java_com_example_lammyopenglffmpegvideoplayer2_LammyOpenglVideoPlayerView_Render
 
 }
 
-#include "LEGL.h"
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_example_lammyopenglffmpegvideoplayer2_LammyOpenglVideoPlayerView_InitView(JNIEnv *env,
                                                                                    jobject instance,
-                                                                                   jobject surface
-                                                                                  )
+                                                                                   jobject surface,
+                                                                                   jlong nativeLammyVideoPlayer)
 {
 
+    LammyOpenglVideoPlayer * lammyplayer =(LammyOpenglVideoPlayer *) nativeLammyVideoPlayer;
     ANativeWindow *win = ANativeWindow_fromSurface(env,surface);
-    LEGL::Get()->Init(win);
+    lammyplayer->dataManager->win = win;
+    lammyplayer->startVideo();
 }

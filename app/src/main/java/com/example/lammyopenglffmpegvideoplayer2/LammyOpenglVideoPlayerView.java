@@ -25,17 +25,6 @@ public class LammyOpenglVideoPlayerView extends GLSurfaceView implements Surface
     public static String videoPath2 = "http://ivi.bupt.edu.cn/hls/cctv6hd.m3u8";
     private long nativeLammyVideoPlayer;
 
-    private Handler mHandler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 1:
-                    play(videoPath, getHolder().getSurface(), nativeLammyVideoPlayer);
-                    break;
-            }
-        }
-    };
-
 
     public LammyOpenglVideoPlayerView(Context context) {
         super(context);
@@ -50,7 +39,7 @@ public class LammyOpenglVideoPlayerView extends GLSurfaceView implements Surface
     @Override
     public void surfaceCreated(SurfaceHolder var1)
     {
-//        InitView(var1.getSurface());
+        InitView(var1.getSurface() , nativeLammyVideoPlayer);
 //        InitOpenGL(nativeLammyVideoPlayer);
     }
 
@@ -77,7 +66,7 @@ public class LammyOpenglVideoPlayerView extends GLSurfaceView implements Surface
 
     }
 
-    public native void InitView(Object surface);
+    public native void InitView(Object surface, long nativeLammyVideoPlayer);
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
@@ -99,22 +88,8 @@ public class LammyOpenglVideoPlayerView extends GLSurfaceView implements Surface
 
 
     public void play(final String videoPath){
-
-            final Surface surface =  getHolder().getSurface();
-            Message message = new Message();
-            message.what = 1;
-            mHandler.sendMessage(message);
-//            if(surface != null&& nativeLammyVideoPlayer!= 0)
-//            {
-//                Log.e("lammy-java","play.................0.");
-//                new Thread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        play(videoPath, surface, nativeLammyVideoPlayer);
-//                    }
-//                }).start();
-//
-//            }
+        Surface surface =  getHolder().getSurface();
+        play(videoPath, getHolder().getSurface(), nativeLammyVideoPlayer);
 
     }
 

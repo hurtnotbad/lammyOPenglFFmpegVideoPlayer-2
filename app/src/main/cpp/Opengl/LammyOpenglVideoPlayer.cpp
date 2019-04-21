@@ -31,7 +31,7 @@ void LammyOpenglVideoPlayer::videoThreadMain()
     LEGL::Get()->Init(dataManager->win);
     openglVideoShow->Init();
 
-   while(!dataManager->isExit)
+   while(!dataManager->isVideoExit)
     {
 
         if(dataManager->videoPauseReady){
@@ -57,8 +57,15 @@ void LammyOpenglVideoPlayer::videoThreadMain()
 
     }
         dataManager->isVideoRunning = false;
-         LEGL::Get()->Close();
+//        LEGL::Get()->Close();
    
+}
+void LammyOpenglVideoPlayer::startVideo()
+{
+    dataManager->isVideoExit = false;
+    dataManager->isVideoRunning  = true;
+    std::thread video_th(&LammyOpenglVideoPlayer::videoThreadMain,this);
+    video_th.detach();
 }
 
 
@@ -128,9 +135,6 @@ void LammyOpenglVideoPlayer::play(const char * videoPath)
         close();
     }
 
-    LEGL::Get()->Close();
-
-
     LOGI("LammyVideoPlayer play .....0");
     dataManager->url = videoPath;
     dataManager->isVideoRunning  = true;
@@ -152,8 +156,8 @@ void LammyOpenglVideoPlayer::play(const char * videoPath)
     std::thread audio_th(&LammyOpenglVideoPlayer::audioThreadMain,this);
     audio_th.detach();
     LOGI("LammyVideoPlayer play .....4");
-    std::thread video_th(&LammyOpenglVideoPlayer::videoThreadMain,this);
-    video_th.detach();
+//    std::thread video_th(&LammyOpenglVideoPlayer::videoThreadMain,this);
+//    video_th.detach();
 
     LOGI("LammyVideoPlayer play .....end");
 
@@ -175,7 +179,7 @@ bool LammyOpenglVideoPlayer::stopThread()
     dataManager->isExit = true;
     for(int i = 0 ; i < 200; i++)
     {
-        if(  !dataManager->isVideoRunning&&!dataManager->isDemuxRunning && !dataManager->isAudioRunning){
+        if( !dataManager->isDemuxRunning && !dataManager->isAudioRunning){// !dataManager->isVideoRunning&&
             LOGE("stop thread success !");
             return true;
         }
@@ -272,6 +276,8 @@ void LammyOpenglVideoPlayer::OpenSLESThreadMain()
 {
     openSLESAudioPlayer->playAudio();
 }
+
+
 
 
 

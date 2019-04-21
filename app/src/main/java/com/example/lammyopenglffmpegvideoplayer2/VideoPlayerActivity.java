@@ -41,7 +41,7 @@ public class VideoPlayerActivity extends AppCompatActivity {
                 float progress = ((float)seekPos)/100.0f;
                 Log.e("seek", "seek bar = "+progress);
                 lammyOpenglVideoPlayerView.seekTo(progress);
-                pauseContinue_Bt.setText("pause");
+                pauseContinue_Bt.setText("暂停");
 
             }
         });

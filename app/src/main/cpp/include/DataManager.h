@@ -35,6 +35,8 @@ public:
 
     /********************* 播放器状态******************************/
     bool isExit= false;
+    bool isVideoExit = false;
+
     bool isVideoRunning = false;
     bool isAudioRunning = false;
     bool isDemuxRunning = false;
