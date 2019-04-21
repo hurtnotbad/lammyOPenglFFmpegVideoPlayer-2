@@ -20,7 +20,6 @@ void LEGL::Draw()
         return;
     }
     LOGE("draw................................................................2222222222222222222222222222");
-    glFinish();
     bool re = eglSwapBuffers(display,surface);
 
    if(re == EGL_FALSE)

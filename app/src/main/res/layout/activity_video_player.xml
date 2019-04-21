@@ -4,12 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".VideoPlayerActivity">
+
     <com.example.lammyopenglffmpegvideoplayer2.LammyOpenglVideoPlayerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/lammy_video_view"
         />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/start_bt"
+        android:textAllCaps="false"
+        android:layout_alignParentBottom="true"
+        android:text="start"
+        android:onClick="start"
+        />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,7 +27,7 @@
         android:textAllCaps="false"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="pause"
+        android:text="暂停"
         android:onClick="pauseContinue"
         />
     <SeekBar

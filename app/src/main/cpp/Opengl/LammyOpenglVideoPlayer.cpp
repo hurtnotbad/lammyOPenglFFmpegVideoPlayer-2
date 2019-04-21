@@ -28,6 +28,8 @@ LammyOpenglVideoPlayer::LammyOpenglVideoPlayer()
 
 void LammyOpenglVideoPlayer::videoThreadMain()
 {
+    LEGL::Get()->Init(dataManager->win);
+    openglVideoShow->Init();
 
    while(!dataManager->isExit)
     {
@@ -35,6 +37,7 @@ void LammyOpenglVideoPlayer::videoThreadMain()
         if(dataManager->videoPauseReady){
             LSleep(2);
             LOGI("pause videoPauseReady  .....");
+            continue;
         }
 
         AVFrame *  avFrame = ffMdecode->decode(0);
@@ -54,7 +57,7 @@ void LammyOpenglVideoPlayer::videoThreadMain()
 
     }
         dataManager->isVideoRunning = false;
-
+         LEGL::Get()->Close();
    
 }
 
@@ -86,6 +89,7 @@ void LammyOpenglVideoPlayer::audioThreadMain()
         }
 
     }
+    dataManager->isAudioRunning = false;
 
 
 }
@@ -111,20 +115,26 @@ void LammyOpenglVideoPlayer::demuxThreadMain()
         }
 
     }
+    dataManager->isDemuxRunning= false;
 
 }
 
 
 void LammyOpenglVideoPlayer::play(const char * videoPath)
 {
+
     if(dataManager -> avFormatContext != nullptr)
     {
         close();
     }
 
-    LOGI("LammyVideoPlayer play .....");
+    LEGL::Get()->Close();
+
+
+    LOGI("LammyVideoPlayer play .....0");
     dataManager->url = videoPath;
     dataManager->isVideoRunning  = true;
+    dataManager->isAudioRunning  = true;
     dataManager->isDemuxRunning= true;
     dataManager->isPause =false;
     dataManager->isPausing =false;
@@ -132,19 +142,20 @@ void LammyOpenglVideoPlayer::play(const char * videoPath)
     dataManager->audioPauseReady =false;
     dataManager->isExit = false;
     dataManager->currentAudioPts = LONG_LONG_MAX;
-
+    LOGI("LammyVideoPlayer play .....1");
     std::thread demux_th(&LammyOpenglVideoPlayer::demuxThreadMain,this);
     demux_th.detach();
-
+    LOGI("LammyVideoPlayer play .....2");
     std::thread opensles_th(&LammyOpenglVideoPlayer::OpenSLESThreadMain,this);
     opensles_th.detach();
-
+    LOGI("LammyVideoPlayer play .....3");
     std::thread audio_th(&LammyOpenglVideoPlayer::audioThreadMain,this);
     audio_th.detach();
+    LOGI("LammyVideoPlayer play .....4");
+    std::thread video_th(&LammyOpenglVideoPlayer::videoThreadMain,this);
+    video_th.detach();
 
-//    std::thread video_th(&LammyOpenglVideoPlayer::videoThreadMain,this);
-//    audio_th.detach();
-    videoThreadMain();
+    LOGI("LammyVideoPlayer play .....end");
 
 }
 
@@ -164,7 +175,7 @@ bool LammyOpenglVideoPlayer::stopThread()
     dataManager->isExit = true;
     for(int i = 0 ; i < 200; i++)
     {
-        if(  !dataManager->isVideoRunning&&!dataManager->isDemuxRunning){
+        if(  !dataManager->isVideoRunning&&!dataManager->isDemuxRunning && !dataManager->isAudioRunning){
             LOGE("stop thread success !");
             return true;
         }
@@ -244,7 +255,6 @@ void LammyOpenglVideoPlayer::seekThreadMain()
     }
 
     dataManager->clearData();
-
 
     dataManager->seekLock.lock();
     long long pos2 = dataManager->avFormatContext->streams[dataManager->videoStreamIndex]->duration* progress;

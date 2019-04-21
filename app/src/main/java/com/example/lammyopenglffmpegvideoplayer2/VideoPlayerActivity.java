@@ -49,25 +49,29 @@ public class VideoPlayerActivity extends AppCompatActivity {
 
 
 
+    boolean isPlaying = false;
     public void pauseContinue(View view){
-//        lammyOpenglVideoPlayerView.pauseOrContinue();
-//        if(lammyOpenglVideoPlayerView.isPlaying()){
-//            pauseContinue_Bt.setText("pause");
-//        }else{
-//            pauseContinue_Bt.setText("play");
-//        }
-        lammyOpenglVideoPlayerView.play(LammyOpenglVideoPlayerView.videoPath);
+        Log.e("lammy-java","pauseContinue..................");
+        lammyOpenglVideoPlayerView.pauseOrContinue();
+        isPlaying = !isPlaying;
+        if(isPlaying){
+            pauseContinue_Bt.setText("暂停");
+        }else
+        {
+            pauseContinue_Bt.setText("继续");
+        }
+
     }
 
-
+    public void start(View view){
+        Log.e("lammy-java","start..................");
+        lammyOpenglVideoPlayerView.play(LammyOpenglVideoPlayerView.videoPath);
+        isPlaying = true;
+        Log.e("lammy-java","start.................2222.");
+    }
     @Override
     public void onPause() {
         super.onPause();
-//        Log.e("lammy-java","lammyOpenglVideoPlayer pauseORcontinue .......onPause" );
-//        if(lammyOpenglVideoPlayerView.isPlaying())
-//        {
-//            lammyOpenglVideoPlayerView.pauseOrContinue();
-//        }
     }
 
     @Override
@@ -80,23 +84,7 @@ public class VideoPlayerActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        Log.e("lammy-java","lammyOpenglVideoPlayer pauseORcontinue .......onResume" );
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    Thread.sleep(600);
-//                    if(!lammyOpenglVideoPlayerView.isClose() && !lammyOpenglVideoPlayerView.isPlaying())
-//                    {
-//                        lammyOpenglVideoPlayerView.pauseOrContinue();
-//                    }
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//
-//            }
-//        }).start();
-//
+
     }
 
 }

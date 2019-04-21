@@ -30,9 +30,13 @@ public:
     void clearData();
     void closeFFMpeg();
 
+
+    ANativeWindow *win;
+
     /********************* 播放器状态******************************/
     bool isExit= false;
     bool isVideoRunning = false;
+    bool isAudioRunning = false;
     bool isDemuxRunning = false;
 
 

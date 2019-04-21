@@ -32,8 +32,9 @@ Java_com_example_lammyopenglffmpegvideoplayer2_LammyOpenglVideoPlayerView_play(J
                                                               jlong nativeVideoPlayer)
 {
     const char *videoPath = env->GetStringUTFChars(videoPath_, 0);
-
     LammyOpenglVideoPlayer * lammyplayer =(LammyOpenglVideoPlayer *) nativeVideoPlayer;
+    ANativeWindow *win = ANativeWindow_fromSurface(env,surface);
+    lammyplayer->dataManager->win = win;
     lammyplayer->play(videoPath);
 
 }

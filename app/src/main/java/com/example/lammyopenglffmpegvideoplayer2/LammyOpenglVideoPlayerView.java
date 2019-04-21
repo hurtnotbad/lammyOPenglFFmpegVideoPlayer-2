@@ -4,13 +4,18 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.opengl.GLSurfaceView;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 
+
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
+
+import static android.content.ContentValues.TAG;
 
 public class LammyOpenglVideoPlayerView extends GLSurfaceView implements SurfaceHolder.Callback, GLSurfaceView.Renderer {//
     static {
@@ -19,6 +24,18 @@ public class LammyOpenglVideoPlayerView extends GLSurfaceView implements Surface
     public static String videoPath = Environment.getExternalStorageDirectory().getPath() +"/ffmpeg/1080.mp4";
     public static String videoPath2 = "http://ivi.bupt.edu.cn/hls/cctv6hd.m3u8";
     private long nativeLammyVideoPlayer;
+
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    play(videoPath, getHolder().getSurface(), nativeLammyVideoPlayer);
+                    break;
+            }
+        }
+    };
+
 
     public LammyOpenglVideoPlayerView(Context context) {
         super(context);
@@ -33,8 +50,8 @@ public class LammyOpenglVideoPlayerView extends GLSurfaceView implements Surface
     @Override
     public void surfaceCreated(SurfaceHolder var1)
     {
-        InitView(var1.getSurface());
-        InitOpenGL(nativeLammyVideoPlayer);
+//        InitView(var1.getSurface());
+//        InitOpenGL(nativeLammyVideoPlayer);
     }
 
     @Override
@@ -81,21 +98,23 @@ public class LammyOpenglVideoPlayerView extends GLSurfaceView implements Surface
 
 
 
-    public void play(String videoPath){
-        while(true){
-            Surface surface =  getHolder().getSurface();
-            if(surface != null&& nativeLammyVideoPlayer!= 0)
-            {
-                play(videoPath, surface, nativeLammyVideoPlayer);
-                return;
-            }
-            try {
-                Thread.sleep(10);
-                continue;
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+    public void play(final String videoPath){
+
+            final Surface surface =  getHolder().getSurface();
+            Message message = new Message();
+            message.what = 1;
+            mHandler.sendMessage(message);
+//            if(surface != null&& nativeLammyVideoPlayer!= 0)
+//            {
+//                Log.e("lammy-java","play.................0.");
+//                new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        play(videoPath, surface, nativeLammyVideoPlayer);
+//                    }
+//                }).start();
+//
+//            }
 
     }
 
