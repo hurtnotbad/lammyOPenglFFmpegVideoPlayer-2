@@ -7,6 +7,8 @@
 
 #include "android/native_window_jni.h"
 #include "android/native_window.h"
+#include "LEGL.h"
+
 #include <list>
 #include <thread>
 
@@ -103,7 +105,7 @@ public:
     std::mutex videoLock;
 
 
-
+//    LEGL* legl = nullptr;
 
 };
 

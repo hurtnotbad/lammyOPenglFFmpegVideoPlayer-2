@@ -29,18 +29,17 @@ LammyOpenglVideoPlayer::LammyOpenglVideoPlayer()
 void LammyOpenglVideoPlayer::videoThreadMain()
 {
 
-    if(!dataManager->isExit)
+   while(!dataManager->isExit)
     {
 
         if(dataManager->videoPauseReady){
             LSleep(2);
             LOGI("pause videoPauseReady  .....");
-            return;
         }
 
         AVFrame *  avFrame = ffMdecode->decode(0);
         if(avFrame != 0 && avFrame != nullptr){
-            LSleep(2);   LOGI("avFrame video show  .....");
+          LOGI("avFrame video show  .....");
             openglVideoShow->show(avFrame);
         }
         else if(avFrame == 0){
@@ -53,9 +52,9 @@ void LammyOpenglVideoPlayer::videoThreadMain()
             dataManager->videoPauseReady = true;
         }
 
-    }else{
-        dataManager->isVideoRunning = false;
     }
+        dataManager->isVideoRunning = false;
+
    
 }
 
@@ -142,6 +141,10 @@ void LammyOpenglVideoPlayer::play(const char * videoPath)
 
     std::thread audio_th(&LammyOpenglVideoPlayer::audioThreadMain,this);
     audio_th.detach();
+
+//    std::thread video_th(&LammyOpenglVideoPlayer::videoThreadMain,this);
+//    audio_th.detach();
+    videoThreadMain();
 
 }
 

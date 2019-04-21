@@ -5,21 +5,23 @@
 #ifndef LAMMYOPENGLVIDEOPLAYER_OPENGLSHOW_H
 #define LAMMYOPENGLVIDEOPLAYER_OPENGLSHOW_H
 
+extern "C"{
+#include <libavutil/frame.h>
+};
 
-#include "DataManager.h"
 #include "GLProgram.h"
 //#include "LammyOpenglVideoPlayer.h"
 
 class OpenglShow {
 public:
-    OpenglShow(DataManager *datamager);
+    OpenglShow(void *datamager);
     void Init();
     void SetViewPortSize(float width , float height);
-    void Draw(void * lammyOpenglVideoPlayer);//LammyOpenglVideoPlayer* lammyOpenglVideoPlayer
+//    void Draw(AVFrame *avFrame);//LammyOpenglVideoPlayer* lammyOpenglVideoPlayer
 
     void show(AVFrame *avFrame);
 public:
-    DataManager *datamager;
+    void *datamager;
     GLProgram * glProgram;
 };
 

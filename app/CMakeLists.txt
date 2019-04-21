@@ -29,6 +29,7 @@ add_library( # Sets the name of the library.
              src/main/cpp/Opengl/utils.cpp
              src/main/cpp/Opengl/OpenglShow.cpp
              src/main/cpp/Opengl/GLProgram.cpp
+             src/main/cpp/Opengl/LEGL.cpp
 
 
 

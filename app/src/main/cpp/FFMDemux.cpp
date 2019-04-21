@@ -70,7 +70,7 @@ int  FFMDemux::demux()
                         dataManager->videoLock.unlock();
                         return 0;
                     }
-                        LOGE("视频 缓存 大于100了,等会儿 %d  ",dataManager->videoPackets.size());
+//                        LOGE("视频 缓存 大于100了,等会儿 %d  ",dataManager->videoPackets.size());
                         dataManager->videoLock.unlock();
                         LSleep(1);
                 }

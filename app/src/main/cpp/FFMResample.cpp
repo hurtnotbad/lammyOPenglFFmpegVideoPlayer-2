@@ -78,7 +78,7 @@ void FFMResample::resample(AVFrame *avFrame)
                  dataManager->audioLock.unlock();
                  return;
             }else{
-                LOGE("resample 音频 缓存 大于%d了,等会儿",dataManager->audioData.size());
+//                LOGE("resample 音频 缓存 大于%d了,等会儿",dataManager->audioData.size());
                 dataManager->audioLock.unlock();
                 LSleep(5);
                 continue;

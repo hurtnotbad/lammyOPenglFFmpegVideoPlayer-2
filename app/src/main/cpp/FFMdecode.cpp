@@ -108,15 +108,15 @@ AVFrame* FFMdecode::decode(int mode)
 
         if (re == 0)
         {
-            LOGE("receive frame video success ......");
+            LOGI("receive frame video success ......");
             int vPts =  avFrame->pts *dataManager->vBasetime;
               while(!dataManager->isExit)
               {
                   // 如果不添加 isPause 暂停会阻塞主线程，使用上层 glsurfaceview,会导致程序崩溃
                   if(dataManager->currentAudioPts < vPts&& !dataManager->isPause )
                   {
-                      LOGE("vPts = %d" , vPts);
-                      LOGE("dataManager->currentAudioPts = %lld" , dataManager->currentAudioPts);
+//                      LOGE("vPts = %d" , vPts);
+//                      LOGE("dataManager->currentAudioPts = %lld" , dataManager->currentAudioPts);
                       LSleep(1);
                       continue;
                   }

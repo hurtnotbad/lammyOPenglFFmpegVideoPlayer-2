@@ -19,7 +19,6 @@ public class VideoPlayerActivity extends AppCompatActivity {
     private LammyOpenglVideoPlayerView lammyOpenglVideoPlayerView;
     private Button pauseContinue_Bt;
     private SeekBar seek_bar;
-    long  previewSeekTime = 0;
     private void initView(){
         lammyOpenglVideoPlayerView = findViewById(R.id.lammy_video_view);
         pauseContinue_Bt = findViewById(R.id.pauseContinue_bt);
@@ -51,23 +50,24 @@ public class VideoPlayerActivity extends AppCompatActivity {
 
 
     public void pauseContinue(View view){
-        lammyOpenglVideoPlayerView.pauseOrContinue();
-        if(lammyOpenglVideoPlayerView.isPlaying()){
-            pauseContinue_Bt.setText("pause");
-        }else{
-            pauseContinue_Bt.setText("play");
-        }
+//        lammyOpenglVideoPlayerView.pauseOrContinue();
+//        if(lammyOpenglVideoPlayerView.isPlaying()){
+//            pauseContinue_Bt.setText("pause");
+//        }else{
+//            pauseContinue_Bt.setText("play");
+//        }
+        lammyOpenglVideoPlayerView.play(LammyOpenglVideoPlayerView.videoPath);
     }
 
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.e("lammy-java","lammyOpenglVideoPlayer pauseORcontinue .......onPause" );
-        if(lammyOpenglVideoPlayerView.isPlaying())
-        {
-            lammyOpenglVideoPlayerView.pauseOrContinue();
-        }
+//        Log.e("lammy-java","lammyOpenglVideoPlayer pauseORcontinue .......onPause" );
+//        if(lammyOpenglVideoPlayerView.isPlaying())
+//        {
+//            lammyOpenglVideoPlayerView.pauseOrContinue();
+//        }
     }
 
     @Override
@@ -80,23 +80,23 @@ public class VideoPlayerActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e("lammy-java","lammyOpenglVideoPlayer pauseORcontinue .......onResume" );
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(600);
-                    if(!lammyOpenglVideoPlayerView.isClose() && !lammyOpenglVideoPlayerView.isPlaying())
-                    {
-                        lammyOpenglVideoPlayerView.pauseOrContinue();
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }).start();
-
+//        Log.e("lammy-java","lammyOpenglVideoPlayer pauseORcontinue .......onResume" );
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    Thread.sleep(600);
+//                    if(!lammyOpenglVideoPlayerView.isClose() && !lammyOpenglVideoPlayerView.isPlaying())
+//                    {
+//                        lammyOpenglVideoPlayerView.pauseOrContinue();
+//                    }
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//        }).start();
+//
     }
 
 }

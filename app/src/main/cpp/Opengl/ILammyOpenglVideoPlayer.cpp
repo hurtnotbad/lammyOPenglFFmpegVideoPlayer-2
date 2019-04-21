@@ -34,17 +34,12 @@ Java_com_example_lammyopenglffmpegvideoplayer2_LammyOpenglVideoPlayerView_play(J
     const char *videoPath = env->GetStringUTFChars(videoPath_, 0);
 
     LammyOpenglVideoPlayer * lammyplayer =(LammyOpenglVideoPlayer *) nativeVideoPlayer;
-//    lammyplayer->dataManager->aNativeWindow  = ANativeWindow_fromSurface(env, surface);
-//   ANativeWindow_setBuffersGeometry(lammyplayer->dataManager->aNativeWindow, lammyplayer->dataManager->outWidth, lammyplayer->dataManager->outHeight, WINDOW_FORMAT_RGBA_8888);
     lammyplayer->play(videoPath);
-//    LSleep(3000);
-//    lammyplayer->close();
 
-
-//    env->ReleaseStringUTFChars(videoPath_, videoPath);
-}extern "C"
+}
+extern "C"
 JNIEXPORT void JNICALL
-Java_com_example_lammyopenglffmpegvideoplayer2_LammyOpenglVideoPlayerView_pause(JNIEnv *env,
+Java_com_example_lammyopenglffmpegvideoplayer2_LammyOpenglVideoPlayerView_pauseOrContinue(JNIEnv *env,
                                                                jobject instance,
                                                                jlong nativeVideoPlayer)
 {
@@ -137,6 +132,7 @@ Java_com_example_lammyopenglffmpegvideoplayer2_LammyOpenglVideoPlayerView_InitOp
 
     LammyOpenglVideoPlayer *lammyplayer = (LammyOpenglVideoPlayer *) nativeVideoPlayer;
     lammyplayer->openglVideoShow->Init();
+
 }
 
 extern "C"
@@ -150,7 +146,7 @@ Java_com_example_lammyopenglffmpegvideoplayer2_LammyOpenglVideoPlayerView_OnView
 
     LammyOpenglVideoPlayer * lammyplayer =(LammyOpenglVideoPlayer *) nativeVideoPlayer;
     lammyplayer->openglVideoShow->SetViewPortSize(width, height);
-
+//    lammyplayer->openglVideoShow->show(nullptr);
 }
 
 extern "C"
@@ -160,7 +156,20 @@ Java_com_example_lammyopenglffmpegvideoplayer2_LammyOpenglVideoPlayerView_Render
                                                                               jlong nativeVideoPlayer)
 {
 
-    LammyOpenglVideoPlayer * lammyplayer =(LammyOpenglVideoPlayer *) nativeVideoPlayer;
-    lammyplayer->openglVideoShow->Draw(lammyplayer);
+//    LammyOpenglVideoPlayer * lammyplayer =(LammyOpenglVideoPlayer *) nativeVideoPlayer;
+//    lammyplayer->openglVideoShow->Draw(lammyplayer);
 
+}
+
+#include "LEGL.h"
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_lammyopenglffmpegvideoplayer2_LammyOpenglVideoPlayerView_InitView(JNIEnv *env,
+                                                                                   jobject instance,
+                                                                                   jobject surface
+                                                                                  )
+{
+
+    ANativeWindow *win = ANativeWindow_fromSurface(env,surface);
+    LEGL::Get()->Init(win);
 }

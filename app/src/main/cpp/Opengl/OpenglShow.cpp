@@ -7,9 +7,10 @@
 #include <Log.h>
 #include <OpenglShow.h>
 #include <LammyOpenglVideoPlayer.h>
+#include <LEGL.h>
 
 #include "OpenglShow.h"
-OpenglShow::OpenglShow(DataManager *datamager)
+OpenglShow::OpenglShow(void *datamager)
 {
      this->datamager = datamager;
      glProgram = new GLProgram();
@@ -27,15 +28,16 @@ void OpenglShow::SetViewPortSize(float width, float height)
     glViewport(0,0,width,height);
 }
 
-void OpenglShow::Draw(void * lammyOpenglVideoPlayer1)//LammyOpenglVideoPlayer* lammyOpenglVideoPlayer
-{
-    LammyOpenglVideoPlayer* lammyOpenglVideoPlayer = ( LammyOpenglVideoPlayer*)lammyOpenglVideoPlayer1;
-    if(lammyOpenglVideoPlayer->dataManager->isVideoRunning&&!lammyOpenglVideoPlayer->dataManager->isPause){
-        LOGE("OpenglShow  Draw。 video。。。。");
-        lammyOpenglVideoPlayer->videoThreadMain();
-    }
-
-}
+//void OpenglShow::Draw(AVFrame *avFrame)//LammyOpenglVideoPlayer* lammyOpenglVideoPlayer
+//{
+////    LammyOpenglVideoPlayer* lammyOpenglVideoPlayer = ( LammyOpenglVideoPlayer*)lammyOpenglVideoPlayer1;
+////    if(lammyOpenglVideoPlayer->dataManager->isVideoRunning&&!lammyOpenglVideoPlayer->dataManager->isPause){
+////        LOGE("OpenglShow  Draw。 video。。。。");
+////        lammyOpenglVideoPlayer->videoThreadMain();
+////    }
+//    show(avFrame);
+//
+//}
 
 void OpenglShow::show(AVFrame *avFrame)
 {
@@ -53,6 +55,10 @@ void OpenglShow::show(AVFrame *avFrame)
 
     glProgram->Draw(w,h,y,u ,v);
 
+
+//    LOGE("LEGL3 += %lld" , legl);
+    LEGL::Get()->Draw();
+    LOGE("LEGL3 += ");
     av_frame_free(&avFrame);
 }
 
