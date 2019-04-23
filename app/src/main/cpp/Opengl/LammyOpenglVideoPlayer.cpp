@@ -207,6 +207,8 @@ bool LammyOpenglVideoPlayer::stopThread()
     for(int i = 0 ; i < 200; i++)
     {
         if(!dataManager->isVideoRunning&& !dataManager->isDemuxRunning && !dataManager->isAudioRunning){
+            openSLESAudioPlayer->Close();
+            clearOpengl();
             LOGE("stop thread success !");
             return true;
         }
@@ -344,24 +346,29 @@ void LammyOpenglVideoPlayer::pause(int mode)
 
     switch (mode){
         case 0:
+            LOGE("pause type is pauseOrContinue");
             pauseOrContinue();
             break;
         case 1:
+            LOGE("pause type is stopThread");
             stopThread();
+            dataManager->isPause = true;
     }
 }
 
 void LammyOpenglVideoPlayer::continuePlay()
 {
+    LOGE("continuePlay continuePlay");
     if(!dataManager->isPause){
         return;
     }
-
+    LOGE("continuePlay continuePlay 222");
     switch (dataManager->PauseMode){
         case 0:
             pauseOrContinue();
             break;
         case 1:
+            LOGE("continuePlay continuePlay 33");
             startThread();
     }
 

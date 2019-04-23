@@ -52,17 +52,18 @@ public class VideoPlayerActivity extends AppCompatActivity {
     boolean isPlaying = false;
     public void pauseContinue(View view){
         Log.e("lammy-java","pauseContinue..................");
-        lammyOpenglVideoPlayerView.pauseOrContinue();
-        isPlaying = !isPlaying;
+//        lammyOpenglVideoPlayerView.pauseOrContinue();
+
         if(isPlaying){
-            lammyOpenglVideoPlayerView.continuePlay();
-            pauseContinue_Bt.setText("暂停");
+            lammyOpenglVideoPlayerView.pause(1);
+            pauseContinue_Bt.setText("继续");
+
         }else
         {
-            lammyOpenglVideoPlayerView.pause(0);
-            pauseContinue_Bt.setText("继续");
+            pauseContinue_Bt.setText("暂停");
+            lammyOpenglVideoPlayerView.continuePlay();
         }
-
+        isPlaying = !isPlaying;
     }
 
     public void start(View view){
