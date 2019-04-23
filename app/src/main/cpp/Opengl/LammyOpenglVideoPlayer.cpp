@@ -335,9 +335,12 @@ void LammyOpenglVideoPlayer::startThread()
 
 void LammyOpenglVideoPlayer::pause(int mode)
 {
+
     if(dataManager->isPause){
         return;
     }
+
+    dataManager->PauseMode = mode;
 
     switch (mode){
         case 0:

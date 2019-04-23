@@ -189,11 +189,22 @@ extern "C"
 JNIEXPORT void JNICALL
 Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_pause(JNIEnv *env,
                                                                              jobject instance,
-                                                                             jlong nativeVideoPlayer)
+                                                                             jlong nativeVideoPlayer,
+                                                                             jint mode
+                                                                             )
 {
 
 
     LammyOpenglVideoPlayer * lammyplayer =(LammyOpenglVideoPlayer *) nativeVideoPlayer;
-    lammyplayer->pause(1);
+    lammyplayer->pause(mode);
+
+}extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_continuePlay(JNIEnv *env,
+                                                                                    jobject instance,
+                                                                                    jlong nativeVideoPlayer)
+{
+    LammyOpenglVideoPlayer * lammyplayer =(LammyOpenglVideoPlayer *) nativeVideoPlayer;
+    lammyplayer->continuePlay();
 
 }
