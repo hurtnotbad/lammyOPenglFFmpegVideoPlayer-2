@@ -28,14 +28,17 @@ LammyOpenglVideoPlayer::LammyOpenglVideoPlayer()
 
 void LammyOpenglVideoPlayer::videoThreadMain()
 {
-    LEGL::Get()->Init(dataManager->win);
-    openglVideoShow->Init();
-
+    initView(dataManager->win);
    while(!dataManager->isExit)
     {
 
         if(dataManager->videoPauseReady){
-            LSleep(2);
+            LSleep(dataManager->PauseSleepTime);
+            if(dataManager->isExit)
+            {
+                dataManager->isAudioRunning= false;
+                return;
+            }
             LOGI("pause videoPauseReady  .....");
             continue;
         }
@@ -105,7 +108,7 @@ void LammyOpenglVideoPlayer::audioThreadMain()
     {
         while(dataManager->audioPauseReady)
         {
-            LSleep(2);
+            LSleep(dataManager->PauseSleepTime);
             if(dataManager->isExit)
             {
                 dataManager->isAudioRunning= false;
@@ -143,7 +146,7 @@ void LammyOpenglVideoPlayer::demuxThreadMain()
         LOGI("demuxThreadMain  start..1111..");
         while(dataManager->demuxPauseReady)
         {
-            LSleep(2);
+            LSleep(dataManager->PauseSleepTime);
             if(dataManager->isExit)
             {
                 dataManager->isDemuxRunning= false;
@@ -186,13 +189,12 @@ void LammyOpenglVideoPlayer::close()
 {
     if(dataManager->avFormatContext == nullptr)
         return;
-    if(!dataManager->isPause){
-        pauseOrContinue();
-    }
-    dataManager->clearData();
-    clearOpengl();
-    pauseOrContinue();
+
     stopThread();
+    dataManager->clearData();
+    //clearOpengl();
+
+
     LOGE("player close success 4 ");
     openSLESAudioPlayer->Close();
     LOGE("player close success 5 ");
@@ -372,6 +374,13 @@ void LammyOpenglVideoPlayer::continuePlay()
             startThread();
     }
 
+}
+
+void LammyOpenglVideoPlayer::initView(  ANativeWindow *win)
+{
+    dataManager -> win = win;
+    LEGL::Get()->Init(dataManager->win);
+    openglVideoShow->Init();
 }
 
 

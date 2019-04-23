@@ -40,8 +40,9 @@ public class VideoPlayerActivity extends AppCompatActivity {
                  int seekPos = seekBar.getProgress();
                 float progress = ((float)seekPos)/100.0f;
                 Log.e("seek", "seek bar = "+progress);
-                lammyOpenglVideoPlayerView.seekTo(progress);
                 pauseContinue_Bt.setText("暂停");
+                lammyOpenglVideoPlayerView.seekTo(progress);
+
 
             }
         });
@@ -55,13 +56,14 @@ public class VideoPlayerActivity extends AppCompatActivity {
 //        lammyOpenglVideoPlayerView.pauseOrContinue();
 
         if(isPlaying){
-            lammyOpenglVideoPlayerView.pause(1);
             pauseContinue_Bt.setText("继续");
-
+            lammyOpenglVideoPlayerView.pauseOrContinue();
+//            lammyOpenglVideoPlayerView.pause(0);
         }else
         {
+            lammyOpenglVideoPlayerView.pauseOrContinue();
             pauseContinue_Bt.setText("暂停");
-            lammyOpenglVideoPlayerView.continuePlay();
+//            lammyOpenglVideoPlayerView.continuePlay();
         }
         isPlaying = !isPlaying;
     }

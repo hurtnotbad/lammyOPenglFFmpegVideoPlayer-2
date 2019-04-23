@@ -31,6 +31,7 @@ public:
     void closeFFMpeg();
 
 
+    int PauseSleepTime = 10;
     int PauseMode = 0;
     ANativeWindow *win;
 

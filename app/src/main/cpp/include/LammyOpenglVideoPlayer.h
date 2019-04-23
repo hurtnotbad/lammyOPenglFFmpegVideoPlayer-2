@@ -35,6 +35,8 @@ public:
     void close();
     void seekTo(float progress);
 
+    void initView(  ANativeWindow *win);
+
     void startVideo();
     bool stopVideo();
     void demuxThreadMain();

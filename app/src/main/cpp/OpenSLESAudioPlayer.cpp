@@ -157,9 +157,9 @@ OpenSLESAudioPlayer::OpenSLESAudioPlayer(DataManager *dataManager)
 
 void OpenSLESAudioPlayer::getAudioData()
 {
-    while ((dataManager->isPause)&&!dataManager->isExit){
+    while ((dataManager->isPause)&&!dataManager->isExit){//
 //        LOGE("音频暂停中。。。。。。。。");
-        LSleep(10);
+        LSleep(dataManager->PauseSleepTime);
         continue;
     }
 

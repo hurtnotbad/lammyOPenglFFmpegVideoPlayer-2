@@ -27,6 +27,7 @@ public class ILammyOpenglVideoPlayer {
     public native void seekTo(float progress,long nativeVideoPlayer );
     public native void close(long nativeVideoPlayer );
     public native void pause(long nativeVideoPlayer , int mode );
+    // 若状态是暂停，则会播放，若不是暂停，则直接返回。
     public native void continuePlay(long nativeVideoPlayer);
 
     public static native void InitAssetManager(AssetManager am);
