@@ -57,8 +57,7 @@ void LammyOpenglVideoPlayer::videoThreadMain()
 
     }
         dataManager->isVideoRunning = false;
-//        LEGL::Get()->Close();
-   
+
 }
 void LammyOpenglVideoPlayer::startVideo()
 {
@@ -68,18 +67,35 @@ void LammyOpenglVideoPlayer::startVideo()
     std::thread video_th(&LammyOpenglVideoPlayer::videoThreadMain,this);
     video_th.detach();
 }
+
+void LammyOpenglVideoPlayer::clearOpengl()
+{
+    glDeleteTextures(3,openglVideoShow->glProgram->yuvTexture);
+    glDeleteProgram(openglVideoShow->glProgram->program);
+    openglVideoShow->glProgram->yuvTexture[0] = 0;
+    openglVideoShow->glProgram->yuvTexture[1] = 0;
+    openglVideoShow->glProgram->yuvTexture[2] = 0;
+    openglVideoShow->glProgram->program = 0;
+}
+
 bool LammyOpenglVideoPlayer::stopVideo()
 {
     dataManager->isVideoExit = true;
     for(int i = 0 ; i < 200; i++)
     {
         if( !dataManager->isVideoRunning){// !dataManager->isVideoRunning&&
-            LOGE("stop thread success !");
+            LOGE("stop video thread success !");
+
+
+            LEGL::Get()->Close();
+            dataManager->win = nullptr;
+            clearOpengl();
+
             return true;
         }
         LSleep(1);
     }
-    LEGL::Get()->Close();
+
     LOGE("stop time out !");
     return false;
 
@@ -303,6 +319,8 @@ void LammyOpenglVideoPlayer::OpenSLESThreadMain()
 {
     openSLESAudioPlayer->playAudio();
 }
+
+
 
 
 

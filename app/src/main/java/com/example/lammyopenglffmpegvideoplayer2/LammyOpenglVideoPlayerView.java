@@ -52,6 +52,8 @@ public class LammyOpenglVideoPlayerView extends GLSurfaceView implements Surface
     @Override
     public void surfaceDestroyed(SurfaceHolder var1)
     {
+
+        pauseOrContinue();
         onSurfaceDestroyed(nativeLammyVideoPlayer);
     }
 
@@ -89,7 +91,7 @@ public class LammyOpenglVideoPlayerView extends GLSurfaceView implements Surface
 
 
     public void play(final String videoPath){
-        Surface surface =  getHolder().getSurface();
+//        Surface surface =  getHolder().getSurface();
         play(videoPath, getHolder().getSurface(), nativeLammyVideoPlayer);
 
     }

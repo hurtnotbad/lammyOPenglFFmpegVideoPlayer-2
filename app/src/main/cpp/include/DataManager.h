@@ -41,7 +41,6 @@ public:
     bool isAudioRunning = false;
     bool isDemuxRunning = false;
 
-
     bool isPause = false;
 
     bool isPausing = false;

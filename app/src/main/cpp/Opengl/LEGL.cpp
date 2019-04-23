@@ -85,11 +85,6 @@ bool LEGL::Init(void *win)
             EGL_SURFACE_TYPE,EGL_WINDOW_BIT,
             EGL_NONE
     };
-//    EGLint surfaceAttr[] = {
-//            EGL_WIDTH, 1920,
-//            EGL_HEIGHT, 1080,
-//            EGL_NONE
-//    };
     EGLConfig config = 0;
     EGLint numConfigs = 0;
     if(EGL_TRUE != eglChooseConfig(display,configSpec,&config,1,&numConfigs))
@@ -101,7 +96,11 @@ bool LEGL::Init(void *win)
     LOGE("eglChooseConfig success!");
     surface = eglCreateWindowSurface(display,config,nwin,NULL);
 //    surface =  eglCreatePbufferSurface(display, config, surfaceAttr);
-
+    if(!surface)
+    {
+        LOGE("surface failed!");
+    }
+    LOGE("eglChooseConfig success!");
     //4 创建并打开EGL上下文
     const EGLint ctxAttr[] = { EGL_CONTEXT_CLIENT_VERSION ,2, EGL_NONE};
     context = eglCreateContext(display,config,EGL_NO_CONTEXT,ctxAttr);

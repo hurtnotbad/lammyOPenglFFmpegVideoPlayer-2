@@ -86,11 +86,15 @@ void GLProgram::setUniform()
 
 void GLProgram::GetTexture(unsigned int index,int width,int height, unsigned char *buf)
 {
+    LOGE("创建纹理yuvTexture[0] = %d ", yuvTexture[0]);
+    LOGE("创建纹理yuvTexture[1] = %d ", yuvTexture[1]);
+    LOGE("创建纹理yuvTexture[2] = %d ", yuvTexture[2]);
 
     if(yuvTexture[index] == 0)
     {
         //材质初始化
         glGenTextures(1,&yuvTexture[index]);
+         LOGE("创建纹理yuvTexture[index] = %d ", yuvTexture[index]);
 
         //设置纹理属性
         glBindTexture(GL_TEXTURE_2D,yuvTexture[index]);
@@ -117,11 +121,35 @@ void GLProgram::GetTexture(unsigned int index,int width,int height, unsigned cha
     glTexSubImage2D(GL_TEXTURE_2D,0,0,0,width,height,GL_LUMINANCE,GL_UNSIGNED_BYTE,buf);
 
 }
+int i = 0 ;
 
 void GLProgram::Draw(int width , int height,unsigned char * y, unsigned char *u, unsigned char *v)
 {
-    glClearColor(1.0f, 1.0f, 0.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+//    if(i%100 > 50){
+//        glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+//        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//
+//        glViewport(0, 0, 1000, 1000);
+//        glUseProgram(program);
+//        setUniform();
+//        glDrawArrays(GL_TRIANGLE_STRIP,0,4);
+//
+//    }else{
+//        glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+//        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//
+//        glViewport(0, 0, 1000, 1000);
+//        glUseProgram(program);
+//        setUniform();
+//        //三维绘制
+//        glDrawArrays(GL_TRIANGLES,0,3);
+//    }
+//    i ++;
+
+
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT |GL_STENCIL_BUFFER_BIT);
 
     glViewport(0, 0, width, height);
     glUseProgram(program);

@@ -42,6 +42,8 @@ public:
     void audioThreadMain();
     void OpenSLESThreadMain();
     bool stopThread();
+
+    void clearOpengl();
 };
 
 
