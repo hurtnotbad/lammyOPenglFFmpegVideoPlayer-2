@@ -82,11 +82,29 @@ void DataManager::clearData()
 
 void DataManager::closeFFMpeg()
 {
-    avcodec_close(videoCodecContext);
-    avcodec_close(audioCodecContext);
-    swr_close(swrContext);
-    sws_freeContext(swsContext);
-    avformat_close_input(&avFormatContext);
+    if(videoCodecContext != 0){
+        avcodec_close(videoCodecContext);
+    }
+    if(audioCodecContext != 0){
+        avcodec_close(audioCodecContext);
+    }
+    if(0 != swrContext)
+    {
+        swr_close(swrContext);
+    }
+    if(0 != swsContext)
+    {
+        sws_freeContext(swsContext);
+    }
+    if(avFormatContext != 0 )
+    {
+        avformat_close_input(&avFormatContext);
+    }
+//    avcodec_close(videoCodecContext);
+//    avcodec_close(audioCodecContext);
+//    swr_close(swrContext);
+//    sws_freeContext(swsContext);
+//    avformat_close_input(&avFormatContext);
     swrContext = nullptr;
     swsContext = nullptr;
     videoCodecContext = nullptr;

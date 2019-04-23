@@ -14,7 +14,7 @@ extern "C"{
 
 extern "C"
 JNIEXPORT jlong JNICALL
-Java_com_example_lammyopenglffmpegvideoplayer2_LammyOpenglVideoPlayerView_initNativeVideoPlayer(JNIEnv *env,
+Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_initNativeVideoPlayer(JNIEnv *env,
                                                                                jobject instance)
 {
     LammyOpenglVideoPlayer *lammyplayer = new LammyOpenglVideoPlayer();
@@ -25,7 +25,7 @@ Java_com_example_lammyopenglffmpegvideoplayer2_LammyOpenglVideoPlayerView_initNa
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_example_lammyopenglffmpegvideoplayer2_LammyOpenglVideoPlayerView_play(JNIEnv *env,
+Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_start(JNIEnv *env,
                                                               jobject instance,
                                                               jstring videoPath_,
                                                               jobject surface,
@@ -33,14 +33,14 @@ Java_com_example_lammyopenglffmpegvideoplayer2_LammyOpenglVideoPlayerView_play(J
 {
     const char *videoPath = env->GetStringUTFChars(videoPath_, 0);
     LammyOpenglVideoPlayer * lammyplayer =(LammyOpenglVideoPlayer *) nativeVideoPlayer;
-//    ANativeWindow *win = ANativeWindow_fromSurface(env,surface);
-//    lammyplayer->dataManager->win = win;
-    lammyplayer->play(videoPath);
+    ANativeWindow *win = ANativeWindow_fromSurface(env,surface);
+    lammyplayer->dataManager->win = win;
+    lammyplayer->start(videoPath);
 
 }
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_example_lammyopenglffmpegvideoplayer2_LammyOpenglVideoPlayerView_pauseOrContinue(JNIEnv *env,
+Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_pauseOrContinue(JNIEnv *env,
                                                                jobject instance,
                                                                jlong nativeVideoPlayer)
 {
@@ -50,7 +50,7 @@ Java_com_example_lammyopenglffmpegvideoplayer2_LammyOpenglVideoPlayerView_pauseO
 
 }extern "C"
 JNIEXPORT void JNICALL
-Java_com_example_lammyopenglffmpegvideoplayer2_LammyOpenglVideoPlayerView_seekTo(JNIEnv *env,
+Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_seekTo(JNIEnv *env,
                                                                 jobject instance,
                                                                 jfloat progress,
                                                                 jlong nativeVideoPlayer)
@@ -61,7 +61,7 @@ Java_com_example_lammyopenglffmpegvideoplayer2_LammyOpenglVideoPlayerView_seekTo
 }
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_example_lammyopenglffmpegvideoplayer2_LammyOpenglVideoPlayerView_close(JNIEnv *env,
+Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_close(JNIEnv *env,
                                                                jobject instance,
                                                                jlong nativeVideoPlayer)
 {
@@ -114,7 +114,7 @@ unsigned char * LoadFileContent(const char *path , int &filesSize){
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_example_lammyopenglffmpegvideoplayer2_LammyOpenglVideoPlayerView_InitAssetManager(JNIEnv *env,
+Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_InitAssetManager(JNIEnv *env,
                                                                                 jclass type,
                                                                                 jobject am)
 {
@@ -126,7 +126,7 @@ Java_com_example_lammyopenglffmpegvideoplayer2_LammyOpenglVideoPlayerView_InitAs
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_example_lammyopenglffmpegvideoplayer2_LammyOpenglVideoPlayerView_InitOpenGL(JNIEnv *env, jclass type ,
+Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_InitOpenGL(JNIEnv *env, jclass type ,
                                                                           jlong nativeVideoPlayer)
 {
 
@@ -138,7 +138,7 @@ Java_com_example_lammyopenglffmpegvideoplayer2_LammyOpenglVideoPlayerView_InitOp
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_example_lammyopenglffmpegvideoplayer2_LammyOpenglVideoPlayerView_OnViewportChanged(JNIEnv *env,
+Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_OnViewportChanged(JNIEnv *env,
                                                                                  jclass type,
                                                                                  jfloat width,
                                                                                  jfloat height,
@@ -152,7 +152,7 @@ Java_com_example_lammyopenglffmpegvideoplayer2_LammyOpenglVideoPlayerView_OnView
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_example_lammyopenglffmpegvideoplayer2_LammyOpenglVideoPlayerView_RenderOneFrame(JNIEnv *env,
+Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_RenderOneFrame(JNIEnv *env,
                                                                               jclass type,
                                                                               jlong nativeVideoPlayer)
 {
@@ -164,7 +164,7 @@ Java_com_example_lammyopenglffmpegvideoplayer2_LammyOpenglVideoPlayerView_Render
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_example_lammyopenglffmpegvideoplayer2_LammyOpenglVideoPlayerView_InitView(JNIEnv *env,
+Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_InitView(JNIEnv *env,
                                                                                    jobject instance,
                                                                                    jobject surface,
                                                                                    jlong nativeLammyVideoPlayer)
@@ -176,12 +176,24 @@ Java_com_example_lammyopenglffmpegvideoplayer2_LammyOpenglVideoPlayerView_InitVi
     lammyplayer->startVideo();
 }extern "C"
 JNIEXPORT void JNICALL
-Java_com_example_lammyopenglffmpegvideoplayer2_LammyOpenglVideoPlayerView_onSurfaceDestroyed(JNIEnv *env,
+Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_onSurfaceDestroyed(JNIEnv *env,
                                                                                              jobject instance,
                                                                                              jlong nativeLammyVideoPlayer)
 {
 
     LammyOpenglVideoPlayer * lammyplayer =(LammyOpenglVideoPlayer *) nativeLammyVideoPlayer;
     lammyplayer->stopVideo();
+
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_pause(JNIEnv *env,
+                                                                             jobject instance,
+                                                                             jlong nativeVideoPlayer)
+{
+
+
+    LammyOpenglVideoPlayer * lammyplayer =(LammyOpenglVideoPlayer *) nativeVideoPlayer;
+    lammyplayer->pause(1);
 
 }

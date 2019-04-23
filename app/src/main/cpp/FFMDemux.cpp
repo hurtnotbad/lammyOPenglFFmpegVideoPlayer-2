@@ -21,12 +21,14 @@ FFMDemux::FFMDemux(DataManager *dataManager)
 
 int  FFMDemux::demux()
 {
+    LOGI("demux  start..000..");
     init();
-    AVPacket *avPacket= av_packet_alloc();
 
+    AVPacket *avPacket= av_packet_alloc();
+    LOGI("demux  start..222..");
     int re = av_read_frame(dataManager->avFormatContext,avPacket);
 
-
+    LOGI("demux  start..333..");
     if(re !=0)
     {
         av_packet_free(&avPacket);
@@ -89,8 +91,10 @@ int  FFMDemux::demux()
 
 void FFMDemux::init()
 {
+    LOGE("FFMDemux::init");
     if(  dataManager->avFormatContext == 0)
     {
+        LOGE("FFMDemux::init start ..........");
         AVFormatContext *ic = NULL;
         // 会将url存入AVFormatContext，释放掉 dataManager->url
         int re = avformat_open_input(&ic,dataManager->url,0,0);
@@ -108,6 +112,7 @@ void FFMDemux::init()
         dataManager->videoStreamIndex =videoStream;
         dataManager->audioStreamIndex =audioStream;
         dataManager->avFormatContext =ic;
+        LOGE("FFMDemux::init start ..........end");
     }
 
 

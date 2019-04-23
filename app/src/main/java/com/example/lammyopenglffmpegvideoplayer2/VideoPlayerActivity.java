@@ -64,11 +64,11 @@ public class VideoPlayerActivity extends AppCompatActivity {
     }
 
     public void start(View view){
-        Log.e("lammy-java","start..................");
-        lammyOpenglVideoPlayerView.play(LammyOpenglVideoPlayerView.videoPath);
+
+        lammyOpenglVideoPlayerView.start(LammyOpenglVideoPlayerView.videoPath);
         isPlaying = true;
         pauseContinue_Bt.setText("暂停");
-        Log.e("lammy-java","start.................2222.");
+
     }
     @Override
     public void onPause() {

@@ -30,6 +30,7 @@ public:
 
 
     void play(const char * videoPath);
+    void start(const char * videoPath);
     void pauseOrContinue();
     void close();
     void seekTo(float progress);
@@ -41,8 +42,12 @@ public:
     void seekThreadMain();
     void audioThreadMain();
     void OpenSLESThreadMain();
-    bool stopThread();
 
+    bool stopThread();
+    void startThread();
+
+    void pause(int mode);
+    void continuePlay();
     void clearOpengl();
 };
 

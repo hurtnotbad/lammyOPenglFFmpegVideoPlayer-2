@@ -4,27 +4,19 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.opengl.GLSurfaceView;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.Surface;
 import android.view.SurfaceHolder;
-
-
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import static android.content.ContentValues.TAG;
-
 public class LammyOpenglVideoPlayerView extends GLSurfaceView implements SurfaceHolder.Callback, GLSurfaceView.Renderer {//
-    static {
-        System.loadLibrary("lammyVideoPlayer");
-    }
+
+
     public static String videoPath = Environment.getExternalStorageDirectory().getPath() +"/ffmpeg/1080.mp4";
     public static String videoPath2 = "http://ivi.bupt.edu.cn/hls/cctv6hd.m3u8";
-    private long nativeLammyVideoPlayer;
 
+    private ILammyOpenglVideoPlayer lammyOpenglVideoPlayer;
 
     public LammyOpenglVideoPlayerView(Context context) {
         super(context);
@@ -36,11 +28,16 @@ public class LammyOpenglVideoPlayerView extends GLSurfaceView implements Surface
         init();
     }
 
+    private void init(){
+        lammyOpenglVideoPlayer = new ILammyOpenglVideoPlayer();
+//        InitAssetManager(getContext().getAssets());
+        setRenderer(this);//new LRenderer()
+    }
+
     @Override
     public void surfaceCreated(SurfaceHolder var1)
     {
-        InitView(var1.getSurface() , nativeLammyVideoPlayer);
-//        InitOpenGL(nativeLammyVideoPlayer);
+//        lammyOpenglVideoPlayer.InitView(getHolder().getSurface(),lammyOpenglVideoPlayer.getNativePlayer());
     }
 
     @Override
@@ -53,23 +50,36 @@ public class LammyOpenglVideoPlayerView extends GLSurfaceView implements Surface
     public void surfaceDestroyed(SurfaceHolder var1)
     {
 
-        pauseOrContinue();
-        onSurfaceDestroyed(nativeLammyVideoPlayer);
+    }
+
+    public void start(final String videoPath){
+        if(getHolder().getSurface() != null)
+        {
+            lammyOpenglVideoPlayer.start(videoPath, getHolder().getSurface(), lammyOpenglVideoPlayer.getNativePlayer());
+        }else
+        {
+            Log.e("lamm-java", "surface is null");
+        }
+
+
+    }
+
+    public void pauseOrContinue(){
+        lammyOpenglVideoPlayer.pauseOrContinue(lammyOpenglVideoPlayer.getNativePlayer());
+    }
+
+    public  void seekTo(float progress){
+        lammyOpenglVideoPlayer.seekTo(progress, lammyOpenglVideoPlayer.getNativePlayer());
+        requestRender();
+    }
+
+    public  void close(){
+        lammyOpenglVideoPlayer.close(lammyOpenglVideoPlayer.getNativePlayer());
     }
 
 
 
-    private native void  onSurfaceDestroyed(long nativeLammyVideoPlayer);
 
-    private void init(){
-        nativeLammyVideoPlayer =  initNativeVideoPlayer();
-        InitAssetManager(getContext().getAssets());
-        setRenderer(this);//new LRenderer()
-//        setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
-
-    }
-
-    public native void InitView(Object surface, long nativeLammyVideoPlayer);
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
@@ -87,38 +97,6 @@ public class LammyOpenglVideoPlayerView extends GLSurfaceView implements Surface
 
         Log.e("lammy-java","onDrawFrame");
     }
-
-
-
-    public void play(final String videoPath){
-//        Surface surface =  getHolder().getSurface();
-        play(videoPath, getHolder().getSurface(), nativeLammyVideoPlayer);
-
-    }
-
-    public void pauseOrContinue(){
-        pauseOrContinue(nativeLammyVideoPlayer);
-    }
-    public  void seekTo(float progress){
-        seekTo(progress, nativeLammyVideoPlayer );
-        requestRender();
-    }
-
-    public  void close(){
-        close(nativeLammyVideoPlayer);
-    }
-
-
-    private native long initNativeVideoPlayer();
-    private native void play(String videoPath, Surface surface, long nativeVideoPlayer);
-    private native void pauseOrContinue(long nativeVideoPlayer );
-    private native void seekTo(float progress,long nativeVideoPlayer );
-    private native void close(long nativeVideoPlayer );
-
-    public static native void InitAssetManager(AssetManager am);
-    public static native void InitOpenGL(long nativeVideoPlayer);
-    public static native void OnViewportChanged(float width, float height,long nativeVideoPlayer);
-    public static native void RenderOneFrame(long nativeVideoPlayer);
 
 
 
