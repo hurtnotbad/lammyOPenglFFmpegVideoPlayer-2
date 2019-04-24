@@ -21,6 +21,7 @@ public class ILammyOpenglVideoPlayer {
     }
     public native void InitView(Object surface, long nativeLammyVideoPlayer);
     public native void  onSurfaceDestroyed(long nativeLammyVideoPlayer);
+    public native void  onSurfaceCreated(Surface surface,long nativeLammyVideoPlayer);
     private native long initNativeVideoPlayer();
     public native void start(String videoPath, Surface surface, long nativeVideoPlayer);
     public native void pauseOrContinue(long nativeVideoPlayer );

@@ -173,16 +173,6 @@ Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_InitView(
     LammyOpenglVideoPlayer * lammyplayer =(LammyOpenglVideoPlayer *) nativeLammyVideoPlayer;
     ANativeWindow *win = ANativeWindow_fromSurface(env,surface);
     lammyplayer->initView(win);
-}extern "C"
-JNIEXPORT void JNICALL
-Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_onSurfaceDestroyed(JNIEnv *env,
-                                                                                             jobject instance,
-                                                                                             jlong nativeLammyVideoPlayer)
-{
-
-    LammyOpenglVideoPlayer * lammyplayer =(LammyOpenglVideoPlayer *) nativeLammyVideoPlayer;
-    lammyplayer->stopVideo();
-
 }
 extern "C"
 JNIEXPORT void JNICALL
@@ -205,5 +195,34 @@ Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_continueP
 {
     LammyOpenglVideoPlayer * lammyplayer =(LammyOpenglVideoPlayer *) nativeVideoPlayer;
     lammyplayer->continuePlay();
+
+}
+
+
+
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_onSurfaceDestroyed(JNIEnv *env,
+                                                                                          jobject instance,
+                                                                                          jlong nativeLammyVideoPlayer)
+{
+
+    LammyOpenglVideoPlayer * lammyplayer =(LammyOpenglVideoPlayer *) nativeLammyVideoPlayer;
+    lammyplayer->onSurfaceDestroyed();
+
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_onSurfaceCreated(JNIEnv *env,
+                                                                                        jobject instance,
+                                                                                        jobject surface,
+                                                                                        jlong nativeLammyVideoPlayer)
+{
+
+    LammyOpenglVideoPlayer * lammyplayer =(LammyOpenglVideoPlayer *) nativeLammyVideoPlayer;
+    ANativeWindow *win = ANativeWindow_fromSurface(env,surface);
+    lammyplayer->onSurfaceCreated(win);
 
 }

@@ -39,6 +39,7 @@ public:
 
     void startVideo();
     bool stopVideo();
+
     void demuxThreadMain();
     void videoThreadMain();
     void seekThreadMain();
@@ -49,6 +50,8 @@ public:
     void startThread();
 
     void pause(int mode);
+    void onSurfaceDestroyed();
+    void onSurfaceCreated(ANativeWindow *win);
     void continuePlay();
     void clearOpengl();
 };

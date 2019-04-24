@@ -32,18 +32,20 @@ void LammyOpenglVideoPlayer::videoThreadMain()
    while(!dataManager->isExit)
     {
 
-        if(dataManager->videoPauseReady){
+        LOGI(" video thread  .....");
+          while(dataManager->videoPauseReady){
             LSleep(dataManager->PauseSleepTime);
             if(dataManager->isExit)
             {
-                dataManager->isAudioRunning= false;
+                dataManager->isVideoRunning = false;
                 return;
             }
             LOGI("pause videoPauseReady  .....");
-            continue;
+//            continue;
         }
-
+        LOGI(" video thread  .....1111");
         AVFrame *  avFrame = ffMdecode->decode(0);
+        LOGI(" video thread  .....222");
         if(avFrame != 0 && avFrame != nullptr){
           LOGI("avFrame video show  .....");
             openglVideoShow->show(avFrame);
@@ -51,7 +53,7 @@ void LammyOpenglVideoPlayer::videoThreadMain()
         else if(avFrame == 0){
             LSleep(2);
         }
-
+        LOGI(" video thread  ....333.");
         if(dataManager->isPausing)//&&dataManager->demuxPauseReady
         {
             LOGI("pause videoPauseReady  .open....");
@@ -59,6 +61,7 @@ void LammyOpenglVideoPlayer::videoThreadMain()
         }
 
     }
+        LOGI(" video thread stop  success.....");
         dataManager->isVideoRunning = false;
 
 }
@@ -86,7 +89,6 @@ bool LammyOpenglVideoPlayer::stopVideo()
     {
         if( !dataManager->isVideoRunning){// !dataManager->isVideoRunning&&
             LOGE("stop video thread success !");
-
 
             LEGL::Get()->Close();
             dataManager->win = nullptr;
@@ -134,7 +136,7 @@ void LammyOpenglVideoPlayer::audioThreadMain()
 
     }
     dataManager->isAudioRunning = false;
-
+    LOGI(" audio thread stop  success.....");
 
 }
 
@@ -165,6 +167,7 @@ void LammyOpenglVideoPlayer::demuxThreadMain()
         }
 
     }
+    LOGI(" demux thread stop  success.....");
     dataManager->isDemuxRunning= false;
 
 }
@@ -210,12 +213,16 @@ bool LammyOpenglVideoPlayer::stopThread()
     {
         if(!dataManager->isVideoRunning&& !dataManager->isDemuxRunning && !dataManager->isAudioRunning){
             openSLESAudioPlayer->Close();
+            LEGL::Get()->Close();
             clearOpengl();
             LOGE("stop thread success !");
             return true;
         }
         LSleep(1);
     }
+    LOGE("stop time out dataManager->isVideoRunning = %d" ,dataManager->isVideoRunning );
+    LOGE("stop time out dataManager->isVideoRunning = %d" ,dataManager->isDemuxRunning );
+    LOGE("stop time out dataManager->isVideoRunning = %d" ,dataManager->isAudioRunning );
     LOGE("stop time out !");
     return false;
 
@@ -358,6 +365,19 @@ void LammyOpenglVideoPlayer::pause(int mode)
     }
 }
 
+
+void LammyOpenglVideoPlayer::onSurfaceDestroyed()
+{
+    LOGE("pause type is dataManager->isPause = %d", dataManager->isPause);
+//            if(dataManager->isPause)
+//            {
+//                pauseOrContinue();
+//            }
+    LOGE("pause type is dataManager->isPause 2 = %d", dataManager->isPause);
+            stopThread();
+           // dataManager->isPause = true;
+}
+
 void LammyOpenglVideoPlayer::continuePlay()
 {
     LOGE("continuePlay continuePlay");
@@ -381,6 +401,15 @@ void LammyOpenglVideoPlayer::initView(  ANativeWindow *win)
     dataManager -> win = win;
     LEGL::Get()->Init(dataManager->win);
     openglVideoShow->Init();
+}
+
+void LammyOpenglVideoPlayer::onSurfaceCreated(ANativeWindow *win)
+{
+    dataManager -> win = win;
+    if(dataManager->avFormatContext != 0)
+    {
+        startThread();
+    }
 }
 
 
