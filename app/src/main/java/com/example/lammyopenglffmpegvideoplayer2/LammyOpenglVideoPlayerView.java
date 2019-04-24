@@ -38,8 +38,6 @@ public class LammyOpenglVideoPlayerView extends GLSurfaceView implements Surface
     public void surfaceCreated(SurfaceHolder var1)
     {
         lammyOpenglVideoPlayer.onSurfaceCreated(getHolder().getSurface(),lammyOpenglVideoPlayer.getNativePlayer());
-//        lammyOpenglVideoPlayer.continuePlay(lammyOpenglVideoPlayer.getNativePlayer());
-
     }
 
     @Override
@@ -70,15 +68,6 @@ public class LammyOpenglVideoPlayerView extends GLSurfaceView implements Surface
         lammyOpenglVideoPlayer.pauseOrContinue(lammyOpenglVideoPlayer.getNativePlayer());
     }
 
-    public void pause(int mode)
-    {
-        lammyOpenglVideoPlayer.pause(lammyOpenglVideoPlayer.getNativePlayer(), mode);
-    }
-
-    public void continuePlay()
-    {
-        lammyOpenglVideoPlayer.continuePlay(lammyOpenglVideoPlayer.getNativePlayer());
-    }
     public  void seekTo(float progress){
         lammyOpenglVideoPlayer.seekTo(progress, lammyOpenglVideoPlayer.getNativePlayer());
         requestRender();
@@ -87,7 +76,6 @@ public class LammyOpenglVideoPlayerView extends GLSurfaceView implements Surface
     public  void close(){
         lammyOpenglVideoPlayer.close(lammyOpenglVideoPlayer.getNativePlayer());
     }
-
 
 
 

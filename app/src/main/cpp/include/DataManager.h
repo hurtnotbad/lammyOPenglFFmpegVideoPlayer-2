@@ -32,7 +32,6 @@ public:
 
 
     int PauseSleepTime = 10;
-    int PauseMode = 0;
     ANativeWindow *win;
 
     /********************* 播放器状态******************************/

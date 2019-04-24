@@ -49,10 +49,10 @@ public:
     bool stopThread();
     void startThread();
 
-    void pause(int mode);
+
     void onSurfaceDestroyed();
     void onSurfaceCreated(ANativeWindow *win);
-    void continuePlay();
+
     void clearOpengl();
 };
 

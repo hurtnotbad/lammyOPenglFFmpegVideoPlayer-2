@@ -164,45 +164,6 @@ Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_RenderOne
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_InitView(JNIEnv *env,
-                                                                                   jobject instance,
-                                                                                   jobject surface,
-                                                                                   jlong nativeLammyVideoPlayer)
-{
-
-    LammyOpenglVideoPlayer * lammyplayer =(LammyOpenglVideoPlayer *) nativeLammyVideoPlayer;
-    ANativeWindow *win = ANativeWindow_fromSurface(env,surface);
-    lammyplayer->initView(win);
-}
-extern "C"
-JNIEXPORT void JNICALL
-Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_pause(JNIEnv *env,
-                                                                             jobject instance,
-                                                                             jlong nativeVideoPlayer,
-                                                                             jint mode
-                                                                             )
-{
-
-
-    LammyOpenglVideoPlayer * lammyplayer =(LammyOpenglVideoPlayer *) nativeVideoPlayer;
-    lammyplayer->pause(mode);
-
-}extern "C"
-JNIEXPORT void JNICALL
-Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_continuePlay(JNIEnv *env,
-                                                                                    jobject instance,
-                                                                                    jlong nativeVideoPlayer)
-{
-    LammyOpenglVideoPlayer * lammyplayer =(LammyOpenglVideoPlayer *) nativeVideoPlayer;
-    lammyplayer->continuePlay();
-
-}
-
-
-
-
-extern "C"
-JNIEXPORT void JNICALL
 Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_onSurfaceDestroyed(JNIEnv *env,
                                                                                           jobject instance,
                                                                                           jlong nativeLammyVideoPlayer)

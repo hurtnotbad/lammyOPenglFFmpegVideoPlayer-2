@@ -24,8 +24,6 @@ LammyOpenglVideoPlayer::LammyOpenglVideoPlayer()
 }
 
 
-
-
 void LammyOpenglVideoPlayer::videoThreadMain()
 {
     initView(dataManager->win);
@@ -344,27 +342,6 @@ void LammyOpenglVideoPlayer::startThread()
 }
 
 
-void LammyOpenglVideoPlayer::pause(int mode)
-{
-
-    if(dataManager->isPause){
-        return;
-    }
-
-    dataManager->PauseMode = mode;
-
-    switch (mode){
-        case 0:
-            LOGE("pause type is pauseOrContinue");
-            pauseOrContinue();
-            break;
-        case 1:
-            LOGE("pause type is stopThread");
-            stopThread();
-            dataManager->isPause = true;
-    }
-}
-
 
 void LammyOpenglVideoPlayer::onSurfaceDestroyed()
 {
@@ -378,23 +355,7 @@ void LammyOpenglVideoPlayer::onSurfaceDestroyed()
            // dataManager->isPause = true;
 }
 
-void LammyOpenglVideoPlayer::continuePlay()
-{
-    LOGE("continuePlay continuePlay");
-    if(!dataManager->isPause){
-        return;
-    }
-    LOGE("continuePlay continuePlay 222");
-    switch (dataManager->PauseMode){
-        case 0:
-            pauseOrContinue();
-            break;
-        case 1:
-            LOGE("continuePlay continuePlay 33");
-            startThread();
-    }
 
-}
 
 void LammyOpenglVideoPlayer::initView(  ANativeWindow *win)
 {
