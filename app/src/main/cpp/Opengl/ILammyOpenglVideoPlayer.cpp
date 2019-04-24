@@ -138,7 +138,7 @@ Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_InitOpenG
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_OnViewportChanged(JNIEnv *env,
+Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_onSizeChanged(JNIEnv *env,
                                                                                  jclass type,
                                                                                  jfloat width,
                                                                                  jfloat height,

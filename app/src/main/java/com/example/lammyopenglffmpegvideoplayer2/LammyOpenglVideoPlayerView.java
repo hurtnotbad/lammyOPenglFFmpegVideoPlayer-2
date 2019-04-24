@@ -37,7 +37,7 @@ public class LammyOpenglVideoPlayerView extends GLSurfaceView implements Surface
     @Override
     public void surfaceCreated(SurfaceHolder var1)
     {
-        lammyOpenglVideoPlayer.onSurfaceCreated(getHolder().getSurface(),lammyOpenglVideoPlayer.getNativePlayer());
+        lammyOpenglVideoPlayer.onSurfaceCreated(getHolder().getSurface());
     }
 
     @Override
@@ -49,13 +49,13 @@ public class LammyOpenglVideoPlayerView extends GLSurfaceView implements Surface
     @Override
     public void surfaceDestroyed(SurfaceHolder var1)
     {
-        lammyOpenglVideoPlayer.onSurfaceDestroyed(lammyOpenglVideoPlayer.getNativePlayer());
+        lammyOpenglVideoPlayer.onSurfaceDestroyed();
     }
 
     public void start(final String videoPath){
         if(getHolder().getSurface() != null)
         {
-            lammyOpenglVideoPlayer.start(videoPath, getHolder().getSurface(), lammyOpenglVideoPlayer.getNativePlayer());
+            lammyOpenglVideoPlayer.start(videoPath, getHolder().getSurface());
         }else
         {
             Log.e("lamm-java", "surface is null");
@@ -65,16 +65,16 @@ public class LammyOpenglVideoPlayerView extends GLSurfaceView implements Surface
     }
 
     public void pauseOrContinue(){
-        lammyOpenglVideoPlayer.pauseOrContinue(lammyOpenglVideoPlayer.getNativePlayer());
+        lammyOpenglVideoPlayer.pauseOrContinue();
     }
 
     public  void seekTo(float progress){
-        lammyOpenglVideoPlayer.seekTo(progress, lammyOpenglVideoPlayer.getNativePlayer());
+        lammyOpenglVideoPlayer.seekTo(progress);
         requestRender();
     }
 
     public  void close(){
-        lammyOpenglVideoPlayer.close(lammyOpenglVideoPlayer.getNativePlayer());
+        lammyOpenglVideoPlayer.close();
     }
 
 

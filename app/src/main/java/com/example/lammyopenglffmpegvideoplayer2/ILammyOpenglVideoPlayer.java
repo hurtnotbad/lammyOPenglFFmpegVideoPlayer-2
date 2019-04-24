@@ -15,20 +15,49 @@ public class ILammyOpenglVideoPlayer {
         nativeLammyPlayer = initNativeVideoPlayer();
     }
 
-
-    public long getNativePlayer(){
-        return nativeLammyPlayer;
+    public  void  onSurfaceDestroyed(){
+        onSurfaceDestroyed( nativeLammyPlayer);
     }
-    public native void  onSurfaceDestroyed(long nativeLammyVideoPlayer);
-    public native void  onSurfaceCreated(Surface surface,long nativeLammyVideoPlayer);
-    private native long initNativeVideoPlayer();
-    public native void start(String videoPath, Surface surface, long nativeVideoPlayer);
-    public native void pauseOrContinue(long nativeVideoPlayer );
-    public native void seekTo(float progress,long nativeVideoPlayer );
-    public native void close(long nativeVideoPlayer );
+    public  void  onSurfaceCreated(Surface surface)
+    {
+        onSurfaceCreated(surface,nativeLammyPlayer);
+    }
 
+    public void start(String videoPath, Surface surface)
+    {
+        start(videoPath,surface,nativeLammyPlayer);
+    }
+
+    public  void pauseOrContinue()
+    {
+        pauseOrContinue(nativeLammyPlayer);
+    }
+
+    public  void seekTo(float progress)
+    {
+        seekTo(progress, nativeLammyPlayer);
+    }
+    public  void close( )
+    {
+        close(nativeLammyPlayer);
+    }
+
+    public   void onSizeChanged(float width, float height)
+    {
+        onSizeChanged(width,height,nativeLammyPlayer);
+    }
+
+
+
+    private native void  onSurfaceDestroyed(long nativeLammyVideoPlayer);
+    private native void  onSurfaceCreated(Surface surface,long nativeLammyVideoPlayer);
+    private native long initNativeVideoPlayer();
+    private native void start(String videoPath, Surface surface, long nativeVideoPlayer);
+    private native void pauseOrContinue(long nativeVideoPlayer );
+    private native void seekTo(float progress,long nativeVideoPlayer );
+    private native void close(long nativeVideoPlayer );
     public static native void InitAssetManager(AssetManager am);
-    public static native void OnViewportChanged(float width, float height,long nativeVideoPlayer);
+    private  native void onSizeChanged(float width, float height,long nativeVideoPlayer);
 
 
 
