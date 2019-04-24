@@ -63,11 +63,6 @@ void LammyOpenglVideoPlayer::videoThreadMain()
         dataManager->isVideoRunning = false;
 
 }
-void LammyOpenglVideoPlayer::startVideo()
-{
-    std::thread video_th(&LammyOpenglVideoPlayer::videoThreadMain,this);
-    video_th.detach();
-}
 
 void LammyOpenglVideoPlayer::clearOpengl()
 {
@@ -78,28 +73,6 @@ void LammyOpenglVideoPlayer::clearOpengl()
     openglVideoShow->glProgram->yuvTexture[2] = 0;
     glDeleteProgram(openglVideoShow->glProgram->program);
     openglVideoShow->glProgram->program = 0;
-}
-
-bool LammyOpenglVideoPlayer::stopVideo()
-{
-    dataManager->isVideoExit = true;
-    for(int i = 0 ; i < 200; i++)
-    {
-        if( !dataManager->isVideoRunning){// !dataManager->isVideoRunning&&
-            LOGE("stop video thread success !");
-
-            LEGL::Get()->Close();
-            dataManager->win = nullptr;
-            clearOpengl();
-
-            return true;
-        }
-        LSleep(1);
-    }
-
-    LOGE("stop time out !");
-    return false;
-
 }
 
 void LammyOpenglVideoPlayer::audioThreadMain()

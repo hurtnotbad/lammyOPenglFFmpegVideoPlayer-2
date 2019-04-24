@@ -37,8 +37,7 @@ public:
 
     void initView(  ANativeWindow *win);
 
-    void startVideo();
-    bool stopVideo();
+
 
     void demuxThreadMain();
     void videoThreadMain();
