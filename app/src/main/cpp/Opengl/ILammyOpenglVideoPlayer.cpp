@@ -175,7 +175,7 @@ Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_onSurface
 }
 
 extern "C"
-JNIEXPORT void JNICALL
+JNIEXPORT jboolean JNICALL
 Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_onSurfaceCreated(JNIEnv *env,
                                                                                         jobject instance,
                                                                                         jobject surface,
@@ -184,6 +184,8 @@ Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_onSurface
 
     LammyOpenglVideoPlayer * lammyplayer =(LammyOpenglVideoPlayer *) nativeLammyVideoPlayer;
     ANativeWindow *win = ANativeWindow_fromSurface(env,surface);
-    lammyplayer->onSurfaceCreated(win);
+    bool isPlay = lammyplayer->onSurfaceCreated(win);
+
+    return  isPlay;
 
 }

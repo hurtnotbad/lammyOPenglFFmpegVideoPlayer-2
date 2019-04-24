@@ -40,6 +40,14 @@ public class LammyOpenglVideoPlayerView extends GLSurfaceView implements Surface
         lammyOpenglVideoPlayer.onSurfaceCreated(getHolder().getSurface());
     }
 
+    public boolean isPlaying()
+    {
+        return lammyOpenglVideoPlayer.isPlaying();
+    }
+    public boolean isClosed()
+    {
+        return lammyOpenglVideoPlayer.isClosed();
+    }
     @Override
     public void surfaceChanged(SurfaceHolder var1, int var2, int var3, int var4)
     {
@@ -70,7 +78,6 @@ public class LammyOpenglVideoPlayerView extends GLSurfaceView implements Surface
 
     public  void seekTo(float progress){
         lammyOpenglVideoPlayer.seekTo(progress);
-        requestRender();
     }
 
     public  void close(){

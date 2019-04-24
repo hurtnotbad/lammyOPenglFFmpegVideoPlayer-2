@@ -41,7 +41,6 @@ public class VideoPlayerActivity extends AppCompatActivity {
                 float progress = ((float)seekPos)/100.0f;
                 Log.e("seek", "seek bar = "+progress);
                 pauseContinue_Bt.setText("暂停");
-                isPlaying = true;
                 lammyOpenglVideoPlayerView.seekTo(progress);
 
 
@@ -51,9 +50,9 @@ public class VideoPlayerActivity extends AppCompatActivity {
 
 
 
-    boolean isPlaying = false;
+
     public void pauseContinue(View view){
-        if(isPlaying){
+        if(lammyOpenglVideoPlayerView.isPlaying()){
             pauseContinue_Bt.setText("继续");
             lammyOpenglVideoPlayerView.pauseOrContinue();
         }else
@@ -61,19 +60,17 @@ public class VideoPlayerActivity extends AppCompatActivity {
             pauseContinue_Bt.setText("暂停");
             lammyOpenglVideoPlayerView.pauseOrContinue();
         }
-        isPlaying = !isPlaying;
     }
 
     public void start(View view){
-
         lammyOpenglVideoPlayerView.start(LammyOpenglVideoPlayerView.videoPath);
-        isPlaying = true;
         pauseContinue_Bt.setText("暂停");
 
     }
     @Override
     public void onPause() {
         super.onPause();
+
     }
 
     @Override
@@ -87,6 +84,12 @@ public class VideoPlayerActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        if(lammyOpenglVideoPlayerView != null&& !lammyOpenglVideoPlayerView.isClosed())
+        {
+            pauseContinue_Bt.setText("暂停");
+        }
+
     }
+
 
 }

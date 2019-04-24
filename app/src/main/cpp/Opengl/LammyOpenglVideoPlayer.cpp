@@ -334,13 +334,15 @@ void LammyOpenglVideoPlayer::initView(  ANativeWindow *win)
     openglVideoShow->Init();
 }
 
-void LammyOpenglVideoPlayer::onSurfaceCreated(ANativeWindow *win)
+bool LammyOpenglVideoPlayer::onSurfaceCreated(ANativeWindow *win)
 {
     dataManager -> win = win;
     if(dataManager->avFormatContext != 0)
     {
         startThread();
+        return true;
     }
+    return false;
 }
 
 

@@ -47,7 +47,7 @@ public:
 
 
     void onSurfaceDestroyed();
-    void onSurfaceCreated(ANativeWindow *win);
+    bool onSurfaceCreated(ANativeWindow *win);
 
     void clearOpengl();
 };
