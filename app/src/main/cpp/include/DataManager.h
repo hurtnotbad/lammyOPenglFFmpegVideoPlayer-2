@@ -36,7 +36,6 @@ public:
 
     /********************* 播放器状态******************************/
     bool isExit= false;
-    bool isVideoExit = false;
 
     bool isVideoRunning = false;
     bool isAudioRunning = false;
@@ -71,8 +70,6 @@ public:
     int audioStreamIndex =0;
     AVFormatContext * avFormatContext = nullptr;
     int64_t duration = 0;
-    AVPacket *aPacket= nullptr;
-    AVFrame *vFrame= nullptr;
 
 
     /********************* 解码相关******************************/
@@ -80,7 +77,6 @@ public:
     AVCodec *audioCodec= nullptr;
     AVCodecContext*audioCodecContext= nullptr;
     AVCodecContext*videoCodecContext = nullptr;
-//    AVFrame * avFrame= nullptr;
 
 
     /********************* FFMpeg 显示相关******************************/
@@ -110,8 +106,6 @@ public:
     int maxVideoPackets = 200;
     std::mutex videoLock;
 
-
-//    LEGL* legl = nullptr;
 
 };
 

@@ -22,19 +22,16 @@ public:
     OpenglShow *openglVideoShow;
     FFMResample* ffmResample;
     OpenSLESAudioPlayer* openSLESAudioPlayer;
-    int test = 3;
 
 
 public:
     LammyOpenglVideoPlayer();
-
 
     void play(const char * videoPath);
     void start(const char * videoPath);
     void pauseOrContinue();
     void close();
     void seekTo(float progress);
-
     void initView(  ANativeWindow *win);
 
 

@@ -142,10 +142,7 @@ void LammyOpenglVideoPlayer::demuxThreadMain()
     dataManager->isDemuxRunning= false;
 
 }
-void LammyOpenglVideoPlayer::play(const char * videoPath)
-{
 
-}
 
 void LammyOpenglVideoPlayer::start(const char * videoPath)
 {
