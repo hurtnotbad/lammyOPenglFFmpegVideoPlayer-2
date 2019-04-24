@@ -4,6 +4,10 @@
 
 #include <Log.h>
 #include <GLProgram.h>
+extern "C"
+{
+#include <libavutil/pixfmt.h>
+}
 
 #include "GLProgram.h"
 #include "utils.h"
@@ -86,9 +90,9 @@ void GLProgram::setUniform()
 
 void GLProgram::GetTexture(unsigned int index,int width,int height, unsigned char *buf)
 {
-    LOGE("创建纹理yuvTexture[0] = %d ", yuvTexture[0]);
-    LOGE("创建纹理yuvTexture[1] = %d ", yuvTexture[1]);
-    LOGE("创建纹理yuvTexture[2] = %d ", yuvTexture[2]);
+//    LOGE("创建纹理yuvTexture[0] = %d ", yuvTexture[0]);
+//    LOGE("创建纹理yuvTexture[1] = %d ", yuvTexture[1]);
+//    LOGE("创建纹理yuvTexture[2] = %d ", yuvTexture[2]);
 
     if(yuvTexture[index] == 0)
     {
@@ -123,7 +127,7 @@ void GLProgram::GetTexture(unsigned int index,int width,int height, unsigned cha
 }
 int i = 0 ;
 
-void GLProgram::Draw(int width , int height,unsigned char * y, unsigned char *u, unsigned char *v)
+void GLProgram::Draw(int width , int height,unsigned char * y, unsigned char *u, unsigned char *v,AVPixelFormat avPixelFormat)
 {
 
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -134,12 +138,16 @@ void GLProgram::Draw(int width , int height,unsigned char * y, unsigned char *u,
     setUniform();
 
 
-    GetTexture(0,width,height,y);  // Y
-    glUniform1i(yTextureLocation,0);
-    GetTexture(1,width/2,height/2,u);  // U
-    glUniform1i(uTextureLocation,1);
-    GetTexture(2,width/2,height/2,v);  // V
-    glUniform1i(vTextureLocation,2);
+    if(avPixelFormat == AV_PIX_FMT_YUV420P)
+    {
+        GetTexture(0,width,height,y);  // Y
+        glUniform1i(yTextureLocation,0);
+        GetTexture(1,width/2,height/2,u);  // U
+        glUniform1i(uTextureLocation,1);
+        GetTexture(2,width/2,height/2,v);  // V
+        glUniform1i(vTextureLocation,2);
+    }
+
 
     //三维绘制
     glDrawArrays(GL_TRIANGLE_STRIP,0,4);

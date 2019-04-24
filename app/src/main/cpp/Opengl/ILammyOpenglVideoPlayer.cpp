@@ -126,18 +126,6 @@ Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_InitAsset
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_InitOpenGL(JNIEnv *env, jclass type ,
-                                                                          jlong nativeVideoPlayer)
-{
-
-
-    LammyOpenglVideoPlayer *lammyplayer = (LammyOpenglVideoPlayer *) nativeVideoPlayer;
-    lammyplayer->openglVideoShow->Init();
-
-}
-
-extern "C"
-JNIEXPORT void JNICALL
 Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_onSizeChanged(JNIEnv *env,
                                                                                  jclass type,
                                                                                  jfloat width,
@@ -148,18 +136,6 @@ Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_onSizeCha
     LammyOpenglVideoPlayer * lammyplayer =(LammyOpenglVideoPlayer *) nativeVideoPlayer;
     lammyplayer->openglVideoShow->SetViewPortSize(width, height);
 //    lammyplayer->openglVideoShow->show(nullptr);
-}
-
-extern "C"
-JNIEXPORT void JNICALL
-Java_com_example_lammyopenglffmpegvideoplayer2_ILammyOpenglVideoPlayer_RenderOneFrame(JNIEnv *env,
-                                                                              jclass type,
-                                                                              jlong nativeVideoPlayer)
-{
-
-//    LammyOpenglVideoPlayer * lammyplayer =(LammyOpenglVideoPlayer *) nativeVideoPlayer;
-//    lammyplayer->openglVideoShow->Draw(lammyplayer);
-
 }
 
 extern "C"

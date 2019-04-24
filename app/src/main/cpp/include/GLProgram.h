@@ -6,6 +6,10 @@
 #define LAMMYOPENGLVIDEOPLAYER_SHADER_H
 
 
+extern "C"
+{
+#include <libavutil/pixfmt.h>
+}
 #include "ggl.h"
 
 class GLProgram {
@@ -42,7 +46,7 @@ public:
 
     void CreateYUVTexture();
     void GetTexture(unsigned int index,int width,int height, unsigned char *buf);
-    void Draw(int width , int height, unsigned char * y,unsigned char *u,unsigned char *v);
+    void Draw(int width , int height, unsigned char * y,unsigned char *u,unsigned char *v,AVPixelFormat avPixelFormat);
 
 };
 

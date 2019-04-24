@@ -84,7 +84,7 @@ int  FFMDemux::demux()
 
 void FFMDemux::init()
 {
-    LOGE("FFMDemux::init");
+//    LOGE("FFMDemux::init");
     if(  dataManager->avFormatContext == 0)
     {
         AVFormatContext *ic = NULL;
