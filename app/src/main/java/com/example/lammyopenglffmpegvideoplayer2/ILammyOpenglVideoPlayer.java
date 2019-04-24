@@ -59,6 +59,7 @@ public class ILammyOpenglVideoPlayer {
     {
         close(nativeLammyPlayer);
         isClosed = true;
+        isPlaying = false;
     }
 
     public boolean isClosed()

@@ -126,28 +126,6 @@ int i = 0 ;
 void GLProgram::Draw(int width , int height,unsigned char * y, unsigned char *u, unsigned char *v)
 {
 
-//    if(i%100 > 50){
-//        glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
-//        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//
-//        glViewport(0, 0, 1000, 1000);
-//        glUseProgram(program);
-//        setUniform();
-//        glDrawArrays(GL_TRIANGLE_STRIP,0,4);
-//
-//    }else{
-//        glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
-//        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//
-//        glViewport(0, 0, 1000, 1000);
-//        glUseProgram(program);
-//        setUniform();
-//        //三维绘制
-//        glDrawArrays(GL_TRIANGLES,0,3);
-//    }
-//    i ++;
-
-
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT |GL_STENCIL_BUFFER_BIT);
 

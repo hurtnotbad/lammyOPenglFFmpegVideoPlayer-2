@@ -17,12 +17,13 @@ public:
     OpenglShow(void *datamager);
     void Init();
     void SetViewPortSize(float width , float height);
-//    void Draw(AVFrame *avFrame);//LammyOpenglVideoPlayer* lammyOpenglVideoPlayer
-
     void show(AVFrame *avFrame);
+    int* getsShowSize(AVFrame *avFrame);
 public:
     void *datamager;
     GLProgram * glProgram;
+    int windowWidth;
+    int windowHeight;
 };
 
 

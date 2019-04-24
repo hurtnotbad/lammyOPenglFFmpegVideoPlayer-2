@@ -13,8 +13,9 @@ import javax.microedition.khronos.opengles.GL10;
 public class LammyOpenglVideoPlayerView extends GLSurfaceView implements SurfaceHolder.Callback, GLSurfaceView.Renderer {//
 
 
-    public static String videoPath = Environment.getExternalStorageDirectory().getPath() +"/ffmpeg/1080.mp4";
-    public static String videoPath2 = "http://ivi.bupt.edu.cn/hls/cctv6hd.m3u8";
+    //public static String videoPath1 = Environment.getExternalStorageDirectory().getPath() +"/ffmpeg/1080.mp4";
+    public static String videoPath = Environment.getExternalStorageDirectory().getPath() +"/ffmpeg/test2.mp4";
+    //public static String videoPath = "http://ivi.bupt.edu.cn/hls/cctv6hd.m3u8";
 
     private ILammyOpenglVideoPlayer lammyOpenglVideoPlayer;
 
@@ -51,7 +52,8 @@ public class LammyOpenglVideoPlayerView extends GLSurfaceView implements Surface
     @Override
     public void surfaceChanged(SurfaceHolder var1, int var2, int var3, int var4)
     {
-
+      //  Log.e("lammy-java", "var2 , var3 , var4"+var2 + ", " + var3+ ", " + var4);
+        lammyOpenglVideoPlayer.onSizeChanged(var3,var4);
     }
 
     @Override

@@ -24,25 +24,15 @@ void OpenglShow::Init()
 
 void OpenglShow::SetViewPortSize(float width, float height)
 {
-    LOGE("opengl  SetViewPortSize。。。。。");
-    glViewport(0,0,width,height);
+    windowHeight = width;
+    windowHeight = height;
 }
-
-//void OpenglShow::Draw(AVFrame *avFrame)//LammyOpenglVideoPlayer* lammyOpenglVideoPlayer
-//{
-////    LammyOpenglVideoPlayer* lammyOpenglVideoPlayer = ( LammyOpenglVideoPlayer*)lammyOpenglVideoPlayer1;
-////    if(lammyOpenglVideoPlayer->dataManager->isVideoRunning&&!lammyOpenglVideoPlayer->dataManager->isPause){
-////        LOGE("OpenglShow  Draw。 video。。。。");
-////        lammyOpenglVideoPlayer->videoThreadMain();
-////    }
-//    show(avFrame);
-//
-//}
 
 void OpenglShow::show(AVFrame *avFrame)
 {
 
     int w = avFrame->width;
+    w =w -  w%64;
     int h = avFrame->height;
 
 //    unsigned char * y  = avFrame->data[0];
@@ -53,13 +43,24 @@ void OpenglShow::show(AVFrame *avFrame)
     unsigned char * u  = avFrame->data[1] ;
     unsigned char * v  = avFrame->data[2];
 
+
     glProgram->Draw(w,h,y,u ,v);
-
-
-//    LOGE("LEGL3 += %lld" , legl);
     LEGL::Get()->Draw();
-    LOGE("LEGL3 += ");
+
     av_frame_free(&avFrame);
+}
+
+int *OpenglShow::getsShowSize(AVFrame *avFrame)
+{
+    int w = avFrame->width;
+    int h = avFrame->height;
+
+    int size[2];
+
+//    float
+
+    return size;
+
 }
 
 
