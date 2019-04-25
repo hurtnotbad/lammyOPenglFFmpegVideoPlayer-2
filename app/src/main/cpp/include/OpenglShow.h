@@ -15,15 +15,19 @@ extern "C"{
 class OpenglShow {
 public:
     OpenglShow(void *datamager);
+
+
     void Init();
     void SetViewPortSize(float width , float height);
     void show(AVFrame *avFrame);
-    int* getsShowSize(AVFrame *avFrame);
+    void getsShowSize(int w ,int h);
+    void freeSpace();
 public:
     void *datamager;
     GLProgram * glProgram;
     int windowWidth;
     int windowHeight;
+    int showRect[4];
 };
 
 

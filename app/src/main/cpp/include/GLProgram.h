@@ -47,7 +47,7 @@ public:
 
 
     void GetTexture(unsigned int index,int width,int height, unsigned char *buf, bool isa);
-    void Draw(int width , int height, unsigned char * y,unsigned char *u,unsigned char *v,AVPixelFormat avPixelFormat);
+    void Draw(int width , int height, unsigned char * y,unsigned char *u,unsigned char *v,AVPixelFormat avPixelFormat, int* showSize);
 
 };
 

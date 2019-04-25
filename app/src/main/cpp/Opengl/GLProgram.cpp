@@ -166,13 +166,12 @@ void GLProgram::GetTexture(unsigned int index,int width,int height, unsigned cha
 }
 int i = 0 ;
 
-void GLProgram::Draw(int width , int height,unsigned char * y, unsigned char *u, unsigned char *v,AVPixelFormat avPixelFormat)
+void GLProgram::Draw(int width , int height,unsigned char * y, unsigned char *u, unsigned char *v,AVPixelFormat avPixelFormat, int* showSize)
 {
 
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT |GL_STENCIL_BUFFER_BIT);
-
-    glViewport(0, 0, width, height);
+    glViewport(showSize[0],showSize[1], showSize[2], showSize[3]);
     glUseProgram(program);
     setUniform();
 

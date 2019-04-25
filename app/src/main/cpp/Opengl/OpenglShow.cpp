@@ -2,8 +2,6 @@
 // Created by lammy on 2019/4/13.
 //
 
-
-
 #include <Log.h>
 #include <OpenglShow.h>
 #include <LammyOpenglVideoPlayer.h>
@@ -26,8 +24,9 @@ void OpenglShow::Init()
 
 void OpenglShow::SetViewPortSize(float width, float height)
 {
-    windowHeight = width;
+    windowWidth = width;
     windowHeight = height;
+    LOGE("windowWidth = %d, windowHeight = %d", windowWidth, windowHeight );
 }
 unsigned char * y = nullptr;
 unsigned char * u = nullptr;
@@ -108,40 +107,64 @@ void OpenglShow::show(AVFrame *avFrame)
 
     int w = avFrame->width;
     int h = avFrame->height;
+    getsShowSize(w,h);
     switch(avFrame->format)
     {
         case AV_PIX_FMT_YUV420P:
             getYUV420pData(avFrame);
-            glProgram->Draw(w,h,y,u ,v ,AV_PIX_FMT_YUV420P );
+            glProgram->Draw(w,h,y,u ,v ,AV_PIX_FMT_YUV420P ,showRect);
             break;
         case AV_PIX_FMT_NV12:
             getNV12Data(avFrame);
-            glProgram->Draw(w,h,y,u , nullptr ,AV_PIX_FMT_NV12 );
+            glProgram->Draw(w,h,y,u , nullptr ,AV_PIX_FMT_NV12 ,showRect);
             break;
         case AV_PIX_FMT_NV21:
             getNV12Data(avFrame);// 与getNV12Data 一样的，只是在着色器里面取 U V的顺序不同
-            glProgram->Draw(w,h,y,u , nullptr ,AV_PIX_FMT_NV21 );
+            glProgram->Draw(w,h,y,u , nullptr ,AV_PIX_FMT_NV21,showRect );
             break;
 
     }
-
 
     LEGL::Get()->Draw();
     av_frame_free(&avFrame);
 }
 
 
-int *OpenglShow::getsShowSize(AVFrame *avFrame)
+void OpenglShow::getsShowSize(int w ,int h)
 {
-    int w = avFrame->width;
-    int h = avFrame->height;
 
-    int size[2];
+    int newH = 0;
+    int newW = 0;
 
-//    float
+    float rWin = float( w)/ float(h);
+    float rFra = float(windowHeight)/ float(windowWidth);
+    if(rWin > rFra )
+    {
+        newH = windowHeight;
+        float r =  float(newH)/ float(h);
+        newW = int(r * w);
+    } else{
 
-    return size;
+        newW = windowWidth;
+        float r =  float(newW)/ float(w);
+        newH = int(r * h);
 
+    }
+
+    int left =(windowWidth - newW) /2;
+    int top =(windowHeight - newH) /2;
+    showRect[0] = left;
+    showRect[1] = top;
+    showRect[2] = newW;
+    showRect[3] = newH;
+
+}
+
+void OpenglShow::freeSpace()
+{
+    free(y);
+    free(u);
+    free(v);
 }
 
 

@@ -19,6 +19,7 @@
         android:layout_alignParentBottom="true"
         android:text="start"
         android:onClick="start"
+        android:background="#00000001"
         />
     <Button
         android:layout_width="wrap_content"
@@ -29,6 +30,7 @@
         android:layout_centerHorizontal="true"
         android:text="暂停"
         android:onClick="pauseContinue"
+        android:background="#00000001"
         />
     <SeekBar
         android:layout_width="match_parent"
