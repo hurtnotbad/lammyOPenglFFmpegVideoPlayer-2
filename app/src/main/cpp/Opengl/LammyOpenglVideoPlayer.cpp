@@ -170,6 +170,7 @@ void LammyOpenglVideoPlayer::close()
     openSLESAudioPlayer->Close();
     LOGE("player close success 5 ");
     dataManager->closeFFMpeg();
+    openglVideoShow->freeSpace();
     LOGE("player close success ");
 
 }

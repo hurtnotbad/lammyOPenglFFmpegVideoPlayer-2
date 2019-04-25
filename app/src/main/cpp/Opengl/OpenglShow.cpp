@@ -165,6 +165,9 @@ void OpenglShow::freeSpace()
     free(y);
     free(u);
     free(v);
+    y = nullptr;
+    u = nullptr;
+    v = nullptr;
 }
 
 
