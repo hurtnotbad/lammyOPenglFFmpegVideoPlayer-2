@@ -38,6 +38,7 @@ public:
     GLuint yTextureLocation , uTextureLocation,vTextureLocation;
     GLuint yuvTexture[3]={0};
     GLuint width , height;
+    GLuint formatTypeLocation;
 public:
 
     GLProgram();
@@ -45,7 +46,7 @@ public:
     void setUniform();
 
     void CreateYUVTexture();
-    void GetTexture(unsigned int index,int width,int height, unsigned char *buf);
+    void GetTexture(unsigned int index,int width,int height, unsigned char *buf, bool isa);
     void Draw(int width , int height, unsigned char * y,unsigned char *u,unsigned char *v,AVPixelFormat avPixelFormat);
 
 };

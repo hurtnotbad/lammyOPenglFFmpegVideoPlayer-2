@@ -27,8 +27,8 @@ void FFMdecode::init(int mode)
             return;
         }
         LOGE("videoCodec FFMdecode::init 1");
-        AVCodec *videoCodec = avcodec_find_decoder(dataManager->avFormatContext->streams[dataManager->videoStreamIndex]->codecpar->codec_id);
-//        AVCodec *videoCodec = avcodec_find_decoder_by_name("h264_mediacodec");
+//        AVCodec *videoCodec = avcodec_find_decoder(dataManager->avFormatContext->streams[dataManager->videoStreamIndex]->codecpar->codec_id);
+        AVCodec *videoCodec = avcodec_find_decoder_by_name("h264_mediacodec");
         AVCodecContext*videoCodecContext = avcodec_alloc_context3(videoCodec);
         avcodec_parameters_to_context(videoCodecContext, dataManager->avFormatContext->streams[dataManager->videoStreamIndex]->codecpar);
         videoCodecContext->thread_count = 8;

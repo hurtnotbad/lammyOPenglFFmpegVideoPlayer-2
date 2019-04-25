@@ -43,7 +43,7 @@ GLuint CreateProgram(GLuint vsShader , GLuint fsShader){
         glDeleteProgram(program);
         return  0;
     }
-    LOGE("create program success  " );
+    LOGE("create program success program = %d ",program );
     return program;
 }
 

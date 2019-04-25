@@ -11,6 +11,13 @@ extern "C"{
 #include "libavcodec/jni.h"
 }
 
+extern "C"
+JNIEXPORT
+jint JNI_OnLoad(JavaVM *vm, void *res) {
+    av_jni_set_java_vm(vm, 0);
+    // 返回jni版本
+    return JNI_VERSION_1_4;
+}
 
 extern "C"
 JNIEXPORT jlong JNICALL

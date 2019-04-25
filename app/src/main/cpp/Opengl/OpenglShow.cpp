@@ -30,9 +30,8 @@ void OpenglShow::SetViewPortSize(float width, float height)
     windowHeight = height;
 }
 unsigned char * y = nullptr;
-unsigned char * v = nullptr;
 unsigned char * u = nullptr;
-
+unsigned char * v = nullptr;
 void getYUV420pData(AVFrame *avFrame)
 {
     int w = avFrame->width;
@@ -63,6 +62,32 @@ void getYUV420pData(AVFrame *avFrame)
     }
 }
 
+void getNV12Data(AVFrame *avFrame)
+{
+    int w = avFrame->width;
+    int h = avFrame->height;
+
+    if(y == nullptr){
+        y = new unsigned char[w*h];
+    }
+    if(u == nullptr){
+        u = new unsigned char[w*h/2];
+    }
+    LOGE("avFrame->linesize[0] = %d" ,avFrame->linesize[0]);
+    LOGE("avFrame->linesize[1] = %d" ,avFrame->linesize[1]);
+
+    int l1 = avFrame->linesize[0];
+    int l2 = avFrame->linesize[1];
+    for(int i= 0 ; i < h ; i++)
+    {
+        memcpy(y + w*i,avFrame->data[0] + l1* i, sizeof( unsigned char)*w);
+    }
+    for(int i= 0 ; i < h/2 ; i++)
+    {
+        memcpy(u + w*i,avFrame->data[1] +  l2 * i, sizeof( unsigned char)*w);
+    }
+}
+
 void OpenglShow::show(AVFrame *avFrame)
 {
 
@@ -75,6 +100,11 @@ void OpenglShow::show(AVFrame *avFrame)
 //    glProgram->Draw(w,h,y,u ,v);
 
 //    AVPixelFormat
+if(glProgram->program)
+
+LOGE("AVPixelFormat = %d" ,avFrame->format); //------------0
+LOGE("AV_PIX_FMT_NV12 = %d" ,AV_PIX_FMT_NV12);//------------25
+LOGE("AV_PIX_FMT_NV21 = %d" ,AV_PIX_FMT_NV21);//------------26
 
     int w = avFrame->width;
     int h = avFrame->height;
@@ -85,6 +115,8 @@ void OpenglShow::show(AVFrame *avFrame)
             glProgram->Draw(w,h,y,u ,v ,AV_PIX_FMT_YUV420P );
             break;
         case AV_PIX_FMT_NV12:
+            getNV12Data(avFrame);
+            glProgram->Draw(w,h,y,u , nullptr ,AV_PIX_FMT_NV12 );
             break;
         case AV_PIX_FMT_NV21:
             break;
