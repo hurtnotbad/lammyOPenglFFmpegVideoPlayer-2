@@ -46,6 +46,13 @@ static const char *fragYUV420P = GET_STR(
                 // shader 会将数据归一化，而 uv 的取值区间本身存在-128到正128 然后归一化到0-1 为了正确计算成rgb，
                 // 则需要归一化到 -0.5 - 0.5的区间
                 yuv.b = texture2D(uTexture,vTexCoord).a - 0.5;
+            }else if(formatType==26)//nv21
+            {
+                yuv.r = texture2D(yTexture,vTexCoord).r;
+                yuv.g = texture2D(uTexture,vTexCoord).a - 0.5 ;
+                // shader 会将数据归一化，而 uv 的取值区间本身存在-128到正128 然后归一化到0-1 为了正确计算成rgb，
+                // 则需要归一化到 -0.5 - 0.5的区间
+                yuv.b = texture2D(uTexture,vTexCoord).r - 0.5;
             }
             rgb = mat3(1.0,     1.0,    1.0,
                        0.0,-0.39465,2.03211,
@@ -122,9 +129,9 @@ void GLProgram::setUniform()
 void GLProgram::GetTexture(unsigned int index,int width,int height, unsigned char *buf, bool isa)
 {
 
-    unsigned int format =GL_LUMINANCE;
+    unsigned int format =GL_LUMINANCE; // 这里是 灰度图，单通道
     if(isa)
-        format = GL_LUMINANCE_ALPHA;
+        format = GL_LUMINANCE_ALPHA; // 这表示的是 带 alpha通道的单通道图，即 2通道，r 和 a
 
     if(yuvTexture[index] == 0)
     {
@@ -186,10 +193,7 @@ void GLProgram::Draw(int width , int height,unsigned char * y, unsigned char *u,
         glUniform1i(yTextureLocation,0);
         GetTexture(1,width/2,height/2,u,true);  // Uv
         glUniform1i(uTextureLocation,1);
-//        GetTexture(2,width/2,height/2,v);  // V
-//        glUniform1i(vTextureLocation,2);
     }
-
 
 
     //三维绘制

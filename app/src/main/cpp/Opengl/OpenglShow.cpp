@@ -88,6 +88,8 @@ void getNV12Data(AVFrame *avFrame)
     }
 }
 
+
+
 void OpenglShow::show(AVFrame *avFrame)
 {
 
@@ -100,11 +102,9 @@ void OpenglShow::show(AVFrame *avFrame)
 //    glProgram->Draw(w,h,y,u ,v);
 
 //    AVPixelFormat
-if(glProgram->program)
-
-LOGE("AVPixelFormat = %d" ,avFrame->format); //------------0
-LOGE("AV_PIX_FMT_NV12 = %d" ,AV_PIX_FMT_NV12);//------------25
-LOGE("AV_PIX_FMT_NV21 = %d" ,AV_PIX_FMT_NV21);//------------26
+//LOGE("AVPixelFormat = %d" ,avFrame->format); //------------0
+//LOGE("AV_PIX_FMT_NV12 = %d" ,AV_PIX_FMT_NV12);//------------25
+//LOGE("AV_PIX_FMT_NV21 = %d" ,AV_PIX_FMT_NV21);//------------26
 
     int w = avFrame->width;
     int h = avFrame->height;
@@ -119,6 +119,8 @@ LOGE("AV_PIX_FMT_NV21 = %d" ,AV_PIX_FMT_NV21);//------------26
             glProgram->Draw(w,h,y,u , nullptr ,AV_PIX_FMT_NV12 );
             break;
         case AV_PIX_FMT_NV21:
+            getNV12Data(avFrame);// 与getNV12Data 一样的，只是在着色器里面取 U V的顺序不同
+            glProgram->Draw(w,h,y,u , nullptr ,AV_PIX_FMT_NV21 );
             break;
 
     }
