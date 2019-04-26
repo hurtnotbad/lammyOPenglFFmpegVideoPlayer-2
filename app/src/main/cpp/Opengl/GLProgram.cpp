@@ -186,7 +186,7 @@ void GLProgram::Draw(int width , int height,unsigned char * y, unsigned char *u,
         GetTexture(2,width/2,height/2,v,false);  // V
         glUniform1i(vTextureLocation,2);
     }
-    if(avPixelFormat == AV_PIX_FMT_NV12)
+    else if(avPixelFormat == AV_PIX_FMT_NV12 || avPixelFormat == AV_PIX_FMT_NV21)
     {
         GetTexture(0,width,height,y,false);  // Y
         glUniform1i(yTextureLocation,0);
